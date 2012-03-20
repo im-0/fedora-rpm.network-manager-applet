@@ -1,5 +1,5 @@
 %define gtk3_version    3.0.1
-%define glib2_version   2.24.0
+%define glib2_version   2.26.0
 %define dbus_version    1.4
 %define dbus_glib_version 0.86
 %define nm_version      1:0.9.3.995
@@ -92,6 +92,7 @@ Summary: Private header files for NetworkManager GUI support
 Group: Development/Libraries
 Requires: NetworkManager-devel >= %{nm_version}
 Requires: NetworkManager-glib-devel >= %{nm_version}
+Obsoletes: NetworkManager-gtk-devel <= %{obsoletes_ver}
 Requires: libnm-gtk = %{version}-%{release}
 Requires: gtk3-devel
 Requires: pkgconfig
