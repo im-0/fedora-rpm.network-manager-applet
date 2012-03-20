@@ -2,7 +2,7 @@
 %define glib2_version   2.26.0
 %define dbus_version    1.4
 %define dbus_glib_version 0.86
-%define nm_version      1:0.9.3.995
+%define nm_version      1:0.9.3.997-2
 %define obsoletes_ver   1:0.9.3.997-0.7
 
 %define snapshot .git20120319
