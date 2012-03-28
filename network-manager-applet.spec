@@ -2,15 +2,15 @@
 %define glib2_version   2.26.0
 %define dbus_version    1.4
 %define dbus_glib_version 0.86
-%define nm_version      1:0.9.3.997-2
-%define obsoletes_ver   1:0.9.3.997-0.7
+%define nm_version      1:0.9.4-1
+%define obsoletes_ver   1:0.9.3.997-2
 
-%define snapshot .git20120319
-%define realversion 0.9.3.997
+%define snapshot .git20120328
+%define realversion 0.9.4.0
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
-Version: 0.9.3.997
+Version: 0.9.4
 Release: 1%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
