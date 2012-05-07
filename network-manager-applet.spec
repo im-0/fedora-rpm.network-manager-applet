@@ -31,6 +31,7 @@ Requires: libnotify >= 0.4.3
 Requires: gnome-keyring
 Requires: gnome-icon-theme
 Requires: nm-connection-editor = %{version}-%{release}
+
 BuildRequires: NetworkManager-devel >= %{nm_version}
 BuildRequires: NetworkManager-glib-devel >= %{nm_version}
 BuildRequires: dbus-devel >= %{dbus_version}
@@ -81,6 +82,7 @@ utility for use with NetworkManager.
 Summary: Private libraries for NetworkManager GUI support
 Group: Development/Libraries
 Requires: gtk3 >= %{gtk3_version}
+Requires: mobile-broadband-provider-info >= 0.20090602
 Obsoletes: NetworkManager-gtk <= %{obsoletes_ver}
 
 %description -n libnm-gtk
