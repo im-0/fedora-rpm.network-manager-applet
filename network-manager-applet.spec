@@ -2,16 +2,16 @@
 %define glib2_version   2.26.0
 %define dbus_version    1.4
 %define dbus_glib_version 0.86
-%define nm_version      1:0.9.4-3
+%define nm_version      1:0.9.4-5
 %define obsoletes_ver   1:0.9.3.997-2
 
-%define snapshot .git20120502
-%define realversion 0.9.4.0
+%define snapshot .git20120521
+%define realversion 0.9.4.1
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: 0.9.4
-Release: 3%{snapshot}%{?dist}
+Release: 4%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -239,6 +239,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{_libdir}/libnm-gtk.so
 
 %changelog
+* Mon May 21 2012 Jiří Klimeš <jklimes@redhat.com> - 0.9.4-4
+- update to git snapshot
+
 * Wed May  2 2012 Jiří Klimeš <jklimes@redhat.com> - 0.9.4-3
 - update to git snapshot
 
