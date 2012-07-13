@@ -2,16 +2,16 @@
 %define glib2_version   2.26.0
 %define dbus_version    1.4
 %define dbus_glib_version 0.86
-%define nm_version      1:0.9.4-5
+%define nm_version      1:0.9.5.95
 %define obsoletes_ver   1:0.9.3.997-2
 
-%define snapshot .git20120521
-%define realversion 0.9.4.1
+%define snapshot .git20120713
+%define realversion 0.9.5.95
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
-Version: 0.9.4
-Release: 4%{snapshot}%{?dist}
+Version: 0.9.5.95
+Release: 1%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -139,37 +139,19 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-edit
 %post	-n libnm-gtk -p /sbin/ldconfig
 %postun	-n libnm-gtk -p /sbin/ldconfig
 
-%pre
-if [ "$1" -gt 1 ]; then
-  export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source`
-  if [ -f "%{_sysconfdir}/gconf/schemas/nm-applet.schemas" ]; then
-    gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/nm-applet.schemas >/dev/null
-  fi
-fi
-
-%preun
-if [ "$1" -eq 0 ]; then
-  export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source`
-  if [ -f "%{_sysconfdir}/gconf/schemas/nm-applet.schemas" ]; then
-    gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/nm-applet.schemas >/dev/null
-  fi
-fi
-
 %post
 touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
-export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source`
-if [ -f "%{_sysconfdir}/gconf/schemas/nm-applet.schemas" ]; then
-  gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/nm-applet.schemas >/dev/null
-fi
 
 %postun
 if [ $1 -eq 0 ] ; then
     touch --no-create %{_datadir}/icons/hicolor &>/dev/null
     gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+    glib-compile-schemas %{_datadir}/glib-2.0/schemas >&/dev/null || :
 fi
 
 %posttrans
 gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+glib-compile-schemas %{_datadir}/glib-2.0/schemas >&/dev/null || :
 
 
 %post -n nm-connection-editor
@@ -189,6 +171,7 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %doc COPYING NEWS AUTHORS README CONTRIBUTING
 %dir %{_datadir}/nm-applet
 %{_bindir}/nm-applet
+%{_libexecdir}/nm-applet-migration-tool
 %{_datadir}/applications/nm-applet.desktop
 %{_datadir}/nm-applet/wired-8021x.ui
 %{_datadir}/nm-applet/info.ui
@@ -203,8 +186,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{_datadir}/icons/hicolor/22x22/apps/nm-vpn-active-lock.png
 %{_datadir}/icons/hicolor/22x22/apps/nm-vpn-connecting*.png
 %{_datadir}/icons/hicolor/22x22/apps/nm-wwan-tower.png
+%{_datadir}/glib-2.0/schemas/org.gnome.nm-applet.gschema.xml
+%{_datadir}/GConf/gsettings/nm-applet.convert
 %{_sysconfdir}/xdg/autostart/nm-applet.desktop
-%{_sysconfdir}/gconf/schemas/nm-applet.schemas
 
 # Yes, lang files for the applet go in nm-connection-editor RPM since it
 # is the RPM that everything else depends on
@@ -239,6 +223,14 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{_libdir}/libnm-gtk.so
 
 %changelog
+* Fri Jul 13 2012 Jiří Klimeš <jklimes@redhat.com> - 0.9.5.95-1.git20120713
+- update to 0.9.5.95 (0.9.6-rc1)  snapshot
+- editor: fixed UI mnemonics
+- editor: fix defaults for PPP echo values
+- applet: various crash and stability fixes
+- applet: show IPv6 addressing page for VPN plugins that support it
+- applet: port to GSettings and split out 0.8 -> 0.9 migration code into standalone tool
+
 * Mon May 21 2012 Jiří Klimeš <jklimes@redhat.com> - 0.9.4-4
 - update to git snapshot
 
