@@ -3,7 +3,7 @@
 %define dbus_version    1.4
 %define dbus_glib_version 0.86
 %define nm_version      1:0.9.5.95
-%define obsoletes_ver   1:0.9.3.997-2
+%define obsoletes_ver   1:0.9.5
 
 %define snapshot .git20120713
 %define realversion 0.9.5.95
@@ -11,11 +11,11 @@
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: 0.9.5.95
-Release: 1%{snapshot}%{?dist}
+Release: 2%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
-Obsoletes: NetworkManager-gnome <= %{obsoletes_ver}
+Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
 Source: http://ftp.gnome.org/pub/GNOME/sources/network-manager-applet/0.9/%{name}-%{realversion}%{snapshot}.tar.bz2
 Patch0: nm-applet-no-notifications.patch
@@ -83,7 +83,7 @@ Summary: Private libraries for NetworkManager GUI support
 Group: Development/Libraries
 Requires: gtk3 >= %{gtk3_version}
 Requires: mobile-broadband-provider-info >= 0.20090602
-Obsoletes: NetworkManager-gtk <= %{obsoletes_ver}
+Obsoletes: NetworkManager-gtk < %{obsoletes_ver}
 
 %description -n libnm-gtk
 This package contains private libraries to be used only by nm-applet,
@@ -94,7 +94,7 @@ Summary: Private header files for NetworkManager GUI support
 Group: Development/Libraries
 Requires: NetworkManager-devel >= %{nm_version}
 Requires: NetworkManager-glib-devel >= %{nm_version}
-Obsoletes: NetworkManager-gtk-devel <= %{obsoletes_ver}
+Obsoletes: NetworkManager-gtk-devel < %{obsoletes_ver}
 Requires: libnm-gtk = %{version}-%{release}
 Requires: gtk3-devel
 Requires: pkgconfig
@@ -223,6 +223,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{_libdir}/libnm-gtk.so
 
 %changelog
+* Sat Jul 14 2012 Kalev Lember <kalevlember@gmail.com> - 0.9.5.95-2.git20120713
+- Fix the versioned obsoletes
+
 * Fri Jul 13 2012 Jiří Klimeš <jklimes@redhat.com> - 0.9.5.95-1.git20120713
 - update to 0.9.5.95 (0.9.6-rc1)  snapshot
 - editor: fixed UI mnemonics
