@@ -11,7 +11,7 @@
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: 0.9.5.95
-Release: 2%{snapshot}%{?dist}
+Release: 3%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -223,6 +223,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{_libdir}/libnm-gtk.so
 
 %changelog
+* Fri Jul 20 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.9.5.95-3.git20120713
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
 * Sat Jul 14 2012 Kalev Lember <kalevlember@gmail.com> - 0.9.5.95-2.git20120713
 - Fix the versioned obsoletes
 
