@@ -5,13 +5,13 @@
 %define nm_version      1:0.9.5.95
 %define obsoletes_ver   1:0.9.5
 
-%define snapshot .git20120713
-%define realversion 0.9.5.95
+%define snapshot %{nil}
+%define realversion 0.9.5.96
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
-Version: 0.9.5.95
-Release: 3%{snapshot}%{?dist}
+Version: 0.9.5.96
+Release: 1%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -26,7 +26,7 @@ Requires: NetworkManager >= %{nm_version}
 Requires: NetworkManager-glib >= %{nm_version}
 Requires: libnm-gtk = %{version}-%{release}
 Requires: dbus >= 1.4
-Requires: dbus-glib >= 0.86
+Requires: dbus-glib >= 0.94
 Requires: libnotify >= 0.4.3
 Requires: gnome-keyring
 Requires: gnome-icon-theme
@@ -39,11 +39,7 @@ BuildRequires: dbus-glib-devel >= %{dbus_glib_version}
 BuildRequires: glib2-devel >= %{glib2_version}
 BuildRequires: gtk3-devel >= %{gtk3_version}
 BuildRequires: GConf2-devel
-%if 0%{?fedora} > 16
 BuildRequires: libgnome-keyring-devel
-%else
-BuildRequires: gnome-keyring-devel
-%endif
 BuildRequires: gobject-introspection-devel >= 0.10.3
 BuildRequires: gettext-devel
 BuildRequires: /usr/bin/autopoint
@@ -68,7 +64,7 @@ Summary: A network connection configuration editor for NetworkManager
 Requires: NetworkManager-glib >= %{nm_version}
 Requires: libnm-gtk = %{version}-%{release}
 Requires: dbus >= 1.4
-Requires: dbus-glib >= 0.86
+Requires: dbus-glib >= 0.94
 Requires: gnome-keyring
 Requires: gnome-icon-theme
 Requires(post): /usr/bin/gtk-update-icon-cache
@@ -223,6 +219,11 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{_libdir}/libnm-gtk.so
 
 %changelog
+* Mon Jul 23 2012 Dan Williams <dcbw@redhat.com> - 0.9.5.96-1
+- Update to 0.9.6-rc2
+- lib: recognize PKCS#12 files exported from Firefox
+- lib: fix some wireless dialog crashes
+
 * Fri Jul 20 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.9.5.95-3.git20120713
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 

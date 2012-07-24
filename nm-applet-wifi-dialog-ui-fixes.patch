@@ -1,7 +1,7 @@
-diff --git network-manager-applet-0.9.5.95/src/libnm-gtk/nm-wireless-dialog.c network-manager-applet-0.9.5.95/src/libnm-gtk/nm-wireless-dialog.c
+diff --git network-manager-applet-0.9.5.96/src/libnm-gtk/nm-wireless-dialog.c network-manager-applet-0.9.5.96/src/libnm-gtk/nm-wireless-dialog.c
 index 2cd75e0..5ae4764 100644
---- network-manager-applet-0.9.5.95/src/libnm-gtk/nm-wireless-dialog.c
-+++ network-manager-applet-0.9.5.95/src/libnm-gtk/nm-wireless-dialog.c
+--- network-manager-applet-0.9.5.96/src/libnm-gtk/nm-wireless-dialog.c
++++ network-manager-applet-0.9.5.96/src/libnm-gtk/nm-wireless-dialog.c
 @@ -1151,24 +1151,28 @@ internal_init (NMAWirelessDialog *self,
  
  		tmp = g_strdup_printf (_("Passwords or encryption keys are required to access the wireless network '%s'."),
