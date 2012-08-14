@@ -11,7 +11,7 @@
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: 0.9.5.96
-Release: 1%{snapshot}%{?dist}
+Release: 2%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -219,6 +219,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{_libdir}/libnm-gtk.so
 
 %changelog
+* Tue Aug 14 2012 Daniel Drake <dsd@laptop.org> - 0.9.5.96-2
+- Rebuild for libgnome-bluetooth.so.11
+
 * Mon Jul 23 2012 Dan Williams <dcbw@redhat.com> - 0.9.5.96-1
 - Update to 0.9.6-rc2
 - lib: recognize PKCS#12 files exported from Firefox
