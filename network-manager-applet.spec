@@ -2,16 +2,16 @@
 %define glib2_version   2.26.0
 %define dbus_version    1.4
 %define dbus_glib_version 0.86
-%define nm_version      1:0.9.5.95
-%define obsoletes_ver   1:0.9.5
+%define nm_version      1:0.9.7.0
+%define obsoletes_ver   1:0.9.5.96
 
-%define snapshot %{nil}
-%define realversion 0.9.5.96
+%define snapshot .git20120820
+%define realversion 0.9.7.0
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
-Version: 0.9.5.96
-Release: 2%{snapshot}%{?dist}
+Version: 0.9.7.0
+Release: 1%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -169,7 +169,7 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{_bindir}/nm-applet
 %{_libexecdir}/nm-applet-migration-tool
 %{_datadir}/applications/nm-applet.desktop
-%{_datadir}/nm-applet/wired-8021x.ui
+%{_datadir}/nm-applet/8021x.ui
 %{_datadir}/nm-applet/info.ui
 %{_datadir}/nm-applet/gsm-unlock.ui
 %{_datadir}/nm-applet/keyring.png
@@ -219,6 +219,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{_libdir}/libnm-gtk.so
 
 %changelog
+* Tue Aug 21 2012 Dan Winship <danw@redhat.com> - 0.9.7.0-1.git20120820
+- Update to 0.9.7.0 snapshot
+
 * Tue Aug 14 2012 Daniel Drake <dsd@laptop.org> - 0.9.5.96-2
 - Rebuild for libgnome-bluetooth.so.11
 
