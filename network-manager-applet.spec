@@ -5,7 +5,7 @@
 %define nm_version      1:0.9.7.0
 %define obsoletes_ver   1:0.9.5.96
 
-%define snapshot .git20120820
+%define snapshot .git20121004
 %define realversion 0.9.7.0
 
 Name: network-manager-applet
@@ -211,6 +211,7 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_libdir}/libnm-gtk.so.*
 %dir %{_datadir}/libnm-gtk
 %{_datadir}/libnm-gtk/*.ui
+%{_libdir}/girepository-1.0/NMGtk-1.0.typelib
 
 %files -n libnm-gtk-devel
 %defattr(-,root,root,0755)
@@ -218,8 +219,12 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_includedir}/libnm-gtk/*.h
 %{_libdir}/pkgconfig/libnm-gtk.pc
 %{_libdir}/libnm-gtk.so
+%{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Thu Oct  4 2012 Dan Winship <danw@redhat.com> - 0.9.7.0-3.git20121004
+- Update to git snapshot
+
 * Wed Sep 12 2012 Jiří Klimeš <jklimes@redhat.com> - 0.9.7.0-3.git20120820
 - move GSettings schema XML to nm-connection-editor rpm (rh #852792)
 
