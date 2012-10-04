@@ -53,6 +53,7 @@ BuildRequires: desktop-file-utils
 BuildRequires: gnome-bluetooth-libs-devel >= 2.27.7.1-1
 %endif
 BuildRequires: iso-codes-devel
+BuildRequires: libgudev1-devel >= 147
 
 
 %description
