@@ -5,7 +5,7 @@
 %define nm_version      1:0.9.7.0
 %define obsoletes_ver   1:0.9.5.96
 
-%define snapshot .git20121004
+%define snapshot .git20121016
 %define realversion 0.9.7.0
 
 Name: network-manager-applet
@@ -223,6 +223,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Tue Oct 16 2012 Jiří Klimeš <jklimes@redhat.com> - 0.9.7.0-3.git20121016
+- Update to git snapshot (git20121016)
+- editor: fix a crash when no VPN plugins are installed
+
 * Thu Oct  4 2012 Dan Winship <danw@redhat.com> - 0.9.7.0-3.git20121004
 - Update to git snapshot
 
