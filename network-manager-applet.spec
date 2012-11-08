@@ -3,7 +3,7 @@
 %define dbus_version    1.4
 %define dbus_glib_version 0.86
 %define nm_version      1:0.9.7.0
-%define obsoletes_ver   1:0.9.5.96
+%define obsoletes_ver   1:0.9.7
 
 %define snapshot .git20121016
 %define realversion 0.9.7.0
@@ -11,7 +11,7 @@
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: 0.9.7.0
-Release: 3%{snapshot}%{?dist}
+Release: 4%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -223,6 +223,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Thu Nov 08 2012 Kalev Lember <kalevlember@gmail.com> - 0.9.7.0-4.git20121016
+- Update the versioned obsoletes for the new F17 NM build
+
 * Tue Oct 16 2012 Jiří Klimeš <jklimes@redhat.com> - 0.9.7.0-3.git20121016
 - Update to git snapshot (git20121016)
 - editor: fix a crash when no VPN plugins are installed
