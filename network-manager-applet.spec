@@ -2,16 +2,16 @@
 %define glib2_version   2.26.0
 %define dbus_version    1.4
 %define dbus_glib_version 0.86
-%define nm_version      1:0.9.7.0
+%define nm_version      1:0.9.7.997
 %define obsoletes_ver   1:0.9.7
 
-%define snapshot .git20121211
-%define realversion 0.9.7.0
+%define snapshot %{nil}
+%define realversion 0.9.7.997
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
-Version: 0.9.7.0
-Release: 6%{snapshot}%{?dist}
+Version: 0.9.7.997
+Release: 1%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -21,7 +21,6 @@ Source: http://ftp.gnome.org/pub/GNOME/sources/network-manager-applet/0.9/%{name
 Patch0: nm-applet-no-notifications.patch
 Patch1: nm-applet-wifi-dialog-ui-fixes.patch
 Patch2: applet-ignore-deprecated.patch
-Patch3: fix-firewall-zone.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: NetworkManager-glib >= %{nm_version}
@@ -108,7 +107,6 @@ nm-applet, nm-connection-editor, and the GNOME control center.
 %patch0 -p1 -b .no-notifications
 %patch1 -p1 -b .applet-wifi-ui
 %patch2 -p1 -b .no-deprecated
-%patch3 -p1 -b .fix-firewall-zone
 
 %build
 autoreconf -i -f
@@ -225,11 +223,19 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Fri Feb  8 2013 Dan Williams <dcbw@redhat.com> - 0.9.7.997-1
+- Update to 0.9.7.997 (0.9.8-beta2)
+- editor: better handling of gateway entry for IPv4
+- editor: fix some mnemonics (rh #893466)
+- editor: fix saving connection when ignoring CA certificate
+- editor: enable Bridge connection editing
+- editor: hide widgets not relevant for VPN connections
+
 * Tue Dec 11 2012 Jiří Klimeš <jklimes@redhat.com> - 0.9.7.0-6.git20121211
 - editor: fix populating Firewall zone in 'General' tab
 
 * Tue Dec 11 2012 Jiří Klimeš <jklimes@redhat.com> - 0.9.7.0-5.git20121211
-- Update to git snapshot (git20121211)
+- Update to git snapshot (git20121211) without bridges
 
 * Thu Nov 08 2012 Kalev Lember <kalevlember@gmail.com> - 0.9.7.0-4.git20121016
 - Update the versioned obsoletes for the new F17 NM build
