@@ -186,6 +186,7 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/icons/hicolor/22x22/apps/nm-wwan-tower.png
 %{_datadir}/GConf/gsettings/nm-applet.convert
 %{_sysconfdir}/xdg/autostart/nm-applet.desktop
+%{_mandir}/man1/nm-applet*
 
 # Yes, lang files for the applet go in nm-connection-editor RPM since it
 # is the RPM that everything else depends on
@@ -202,6 +203,7 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/icons/hicolor/*/apps/nm-no-connection.*
 %{_datadir}/icons/hicolor/16x16/apps/nm-vpn-standalone-lock.png
 %{_datadir}/glib-2.0/schemas/org.gnome.nm-applet.gschema.xml
+%{_mandir}/man1/nm-connection-editor*
 %dir %{_datadir}/gnome-vpn-properties
 %ifnarch s390 s390x
 %{_libdir}/gnome-bluetooth/plugins/*
