@@ -6,11 +6,11 @@
 %define obsoletes_ver   1:0.9.7
 
 %define snapshot %{nil}
-%define realversion 0.9.7.997
+%define realversion 0.9.8.0
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
-Version: 0.9.7.997
+Version: 0.9.8.0
 Release: 1%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
@@ -223,6 +223,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Thu Feb 21 2013 Dan Williams <dcbw@redhat.com> - 0.9.8.0-1
+- Update to 0.9.8.0
+
 * Fri Feb  8 2013 Dan Williams <dcbw@redhat.com> - 0.9.7.997-1
 - Update to 0.9.7.997 (0.9.8-beta2)
 - editor: better handling of gateway entry for IPv4
