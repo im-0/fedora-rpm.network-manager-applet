@@ -2,15 +2,15 @@
 %define glib2_version   2.26.0
 %define dbus_version    1.4
 %define dbus_glib_version 0.86
-%define nm_version      1:0.9.7.997
+%define nm_version      1:0.9.8.0
 %define obsoletes_ver   1:0.9.7
 
-%define snapshot %{nil}
-%define realversion 0.9.8.0
+%define snapshot .git20130327
+%define realversion 0.9.8.1
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
-Version: 0.9.8.0
+Version: 0.9.8.1
 Release: 1%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
@@ -54,7 +54,7 @@ BuildRequires: gnome-bluetooth-libs-devel >= 2.27.7.1-1
 %endif
 BuildRequires: iso-codes-devel
 BuildRequires: libgudev1-devel >= 147
-
+BuildRequires: libsecret-devel >= 0.12
 
 %description
 This package contains a network control and status notification area applet
@@ -225,7 +225,19 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
-* Thu Feb 21 2013 Dan Williams <dcbw@redhat.com> - 0.9.8.0-1
+* Wed Mar 27 2013 Dan Williams <dcbw@redhat.com> - 0.9.8.1-1.git20130327
+- Update to 0.9.8.2 snapshot
+- Updated translations
+- editor: don't overwrite bridge/bond master interface name with UUID
+- applet: fix WWAN PIN dialog invalid "label1" entry widget
+- editor: fix allowed values for VLAN ID and MTU
+- editor: preserve existing PPP connection LCP echo failure and reply values
+- editor: ensure changes to the STP checkbox are saved
+- editor: hide BSSID for AdHoc connection (rh #906133)
+- editor: fix random data sneaking into IPv6 route gateway fields
+- editor: fix handling of initial entry for MAC address widgets
+
+* Wed Feb 27 2013 Jiří Klimeš <jklimes@redhat.com> - 0.9.8.0-1
 - Update to 0.9.8.0
 
 * Fri Feb  8 2013 Dan Williams <dcbw@redhat.com> - 0.9.7.997-1
