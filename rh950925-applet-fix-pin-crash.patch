@@ -1,0 +1,36 @@
+From 199ebe1e15a99da31e8c1ad3006df4df8d1d43fe Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Ji=C5=99=C3=AD=20Klime=C5=A1?= <jklimes@redhat.com>
+Date: Mon, 15 Apr 2013 09:29:56 +0200
+Subject: [PATCH] gsm: fix a crash while getting PIN from a keyring (rh
+ #950925)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+secret_service_search_finish() can return an empty list without any error.
+
+Signed-off-by: Jiří Klimeš <jklimes@redhat.com>
+---
+ src/applet-device-gsm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/applet-device-gsm.c b/src/applet-device-gsm.c
+index 2bf1ae4..a647fca 100644
+--- a/src/applet-device-gsm.c
++++ b/src/applet-device-gsm.c
+@@ -811,10 +811,10 @@ keyring_pin_check_cb (GObject *source,
+ 
+ 	list = secret_service_search_finish (NULL, result, &error);
+ 
+-	if (error != NULL) {
++	if (!list) {
+ 		/* No saved PIN, just ask the user */
+ 		unlock_dialog_new (info->device, info);
+-		g_error_free (error);
++		g_clear_error (&error);
+ 		return;
+ 	}
+ 
+-- 
+1.7.11.7
+

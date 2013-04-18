@@ -11,7 +11,7 @@
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: 0.9.8.1
-Release: 1%{snapshot}%{?dist}
+Release: 2%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -21,6 +21,7 @@ Source: http://ftp.gnome.org/pub/GNOME/sources/network-manager-applet/0.9/%{name
 Patch0: nm-applet-no-notifications.patch
 Patch1: nm-applet-wifi-dialog-ui-fixes.patch
 Patch2: applet-ignore-deprecated.patch
+Patch3: rh950925-applet-fix-pin-crash.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: NetworkManager-glib >= %{nm_version}
@@ -107,6 +108,7 @@ nm-applet, nm-connection-editor, and the GNOME control center.
 %patch0 -p1 -b .no-notifications
 %patch1 -p1 -b .applet-wifi-ui
 %patch2 -p1 -b .no-deprecated
+%patch3 -p1 -b .fix-pin-crash
 
 %build
 autoreconf -i -f
@@ -225,6 +227,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Thu Apr 18 2013 Jiří Klimeš <jklimes@redhat.com> - 0.9.8.1-2.git20130327
+- applet: fix crash while getting a PIN to unlock a modem (rh #950925)
+
 * Wed Mar 27 2013 Dan Williams <dcbw@redhat.com> - 0.9.8.1-1.git20130327
 - Update to 0.9.8.2 snapshot
 - Updated translations
