@@ -5,13 +5,13 @@
 %define nm_version      1:0.9.8.0
 %define obsoletes_ver   1:0.9.7
 
-%define snapshot .git20130327
+%define snapshot .git20130430
 %define realversion 0.9.8.1
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: 0.9.8.1
-Release: 2%{snapshot}%{?dist}
+Release: 3%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -21,7 +21,6 @@ Source: http://ftp.gnome.org/pub/GNOME/sources/network-manager-applet/0.9/%{name
 Patch0: nm-applet-no-notifications.patch
 Patch1: nm-applet-wifi-dialog-ui-fixes.patch
 Patch2: applet-ignore-deprecated.patch
-Patch3: rh950925-applet-fix-pin-crash.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: NetworkManager-glib >= %{nm_version}
@@ -108,7 +107,6 @@ nm-applet, nm-connection-editor, and the GNOME control center.
 %patch0 -p1 -b .no-notifications
 %patch1 -p1 -b .applet-wifi-ui
 %patch2 -p1 -b .no-deprecated
-%patch3 -p1 -b .fix-pin-crash
 
 %build
 autoreconf -i -f
@@ -227,6 +225,12 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Tue Apr 30 2013 Dan Williams <dcbw@redhat.com> - 0.9.8.1-3.git20130430
+- editor: fix possible crash canceling connection edit dialog
+- applet: only request secrets from the user when allowed to
+- applet: fix signal icons with newer libpng
+- applet: fix possible crash getting secrets with libsecret
+
 * Thu Apr 18 2013 Jiří Klimeš <jklimes@redhat.com> - 0.9.8.1-2.git20130327
 - applet: fix crash while getting a PIN to unlock a modem (rh #950925)
 
