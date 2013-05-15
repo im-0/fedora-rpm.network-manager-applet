@@ -1,17 +1,17 @@
 %define gtk3_version    3.0.1
-%define glib2_version   2.26.0
+%define glib2_version   2.32.0
 %define dbus_version    1.4
 %define dbus_glib_version 0.86
-%define nm_version      1:0.9.8.0
+%define nm_version      1:0.9.9.0
 %define obsoletes_ver   1:0.9.7
 
-%define snapshot .git20130430
-%define realversion 0.9.8.1
+%define snapshot .git20130515
+%define realversion 0.9.9.0
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
-Version: 0.9.8.1
-Release: 3%{snapshot}%{?dist}
+Version: 0.9.9.0
+Release: 1%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -26,7 +26,7 @@ Requires: NetworkManager >= %{nm_version}
 Requires: NetworkManager-glib >= %{nm_version}
 Requires: libnm-gtk = %{version}-%{release}
 Requires: dbus >= 1.4
-Requires: dbus-glib >= 0.94
+Requires: dbus-glib >= 0.100
 Requires: libnotify >= 0.4.3
 Requires: gnome-keyring
 Requires: gnome-icon-theme
@@ -39,7 +39,7 @@ BuildRequires: dbus-glib-devel >= %{dbus_glib_version}
 BuildRequires: glib2-devel >= %{glib2_version}
 BuildRequires: gtk3-devel >= %{gtk3_version}
 BuildRequires: GConf2-devel
-BuildRequires: libgnome-keyring-devel
+BuildRequires: libsecret-devel
 BuildRequires: gobject-introspection-devel >= 0.10.3
 BuildRequires: gettext-devel
 BuildRequires: /usr/bin/autopoint
@@ -225,6 +225,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Wed May 15 2013 Dan Williams <dcbw@redhat.com> - 0.9.9.0-1.git20130515
+- Update to 0.9.10 snapshot
+
 * Tue Apr 30 2013 Dan Williams <dcbw@redhat.com> - 0.9.8.1-3.git20130430
 - editor: fix possible crash canceling connection edit dialog
 - applet: only request secrets from the user when allowed to
