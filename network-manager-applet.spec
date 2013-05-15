@@ -39,7 +39,7 @@ BuildRequires: dbus-glib-devel >= %{dbus_glib_version}
 BuildRequires: glib2-devel >= %{glib2_version}
 BuildRequires: gtk3-devel >= %{gtk3_version}
 BuildRequires: GConf2-devel
-BuildRequires: libsecret-devel
+BuildRequires: libsecret-devel libgnome-keyring-devel
 BuildRequires: gobject-introspection-devel >= 0.10.3
 BuildRequires: gettext-devel
 BuildRequires: /usr/bin/autopoint
