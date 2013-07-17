@@ -11,7 +11,7 @@
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: 0.9.9.0
-Release: 1%{snapshot}%{?dist}
+Release: 2%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -28,7 +28,6 @@ Requires: libnm-gtk = %{version}-%{release}
 Requires: dbus >= 1.4
 Requires: dbus-glib >= 0.100
 Requires: libnotify >= 0.4.3
-Requires: gnome-keyring
 Requires: gnome-icon-theme
 Requires: nm-connection-editor = %{version}-%{release}
 
@@ -38,8 +37,7 @@ BuildRequires: dbus-devel >= %{dbus_version}
 BuildRequires: dbus-glib-devel >= %{dbus_glib_version}
 BuildRequires: glib2-devel >= %{glib2_version}
 BuildRequires: gtk3-devel >= %{gtk3_version}
-BuildRequires: GConf2-devel
-BuildRequires: libsecret-devel libgnome-keyring-devel
+BuildRequires: libsecret-devel
 BuildRequires: gobject-introspection-devel >= 0.10.3
 BuildRequires: gettext-devel
 BuildRequires: /usr/bin/autopoint
@@ -66,7 +64,6 @@ Requires: NetworkManager-glib >= %{nm_version}
 Requires: libnm-gtk = %{version}-%{release}
 Requires: dbus >= 1.4
 Requires: dbus-glib >= 0.94
-Requires: gnome-keyring
 Requires: gnome-icon-theme
 Requires(post): /usr/bin/gtk-update-icon-cache
 
@@ -115,7 +112,8 @@ intltoolize --force
     --disable-static \
     --with-bluetooth \
     --enable-more-warnings=yes \
-    --with-gtkver=3
+    --with-gtkver=3 \
+    --disable-migration
 make %{?_smp_mflags}
 
 %install
@@ -169,7 +167,6 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %doc COPYING NEWS AUTHORS README CONTRIBUTING
 %dir %{_datadir}/nm-applet
 %{_bindir}/nm-applet
-%{_libexecdir}/nm-applet-migration-tool
 %{_datadir}/applications/nm-applet.desktop
 %{_datadir}/nm-applet/8021x.ui
 %{_datadir}/nm-applet/info.ui
@@ -225,6 +222,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Wed Jul 17 2013 Dan Williams <dcbw@redhat.com> - 0.9.9.0-2
+- Disable migration tool and remove dependencies on GConf and gnome-keyring
+
 * Wed May 15 2013 Dan Williams <dcbw@redhat.com> - 0.9.9.0-1.git20130515
 - Update to 0.9.10 snapshot
 
