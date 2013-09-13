@@ -5,13 +5,13 @@
 %define nm_version      1:0.9.9.0
 %define obsoletes_ver   1:0.9.7
 
-%define snapshot .git20130515
+%define snapshot .git20130913
 %define realversion 0.9.9.0
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: 0.9.9.0
-Release: 4%{snapshot}%{?dist}
+Release: 6%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -112,7 +112,6 @@ intltoolize --force
     --disable-static \
     --with-bluetooth \
     --enable-more-warnings=yes \
-    --with-gtkver=3 \
     --disable-migration
 make %{?_smp_mflags}
 
@@ -194,7 +193,6 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/nm-applet/ce-*.ui
 %{_datadir}/nm-applet/eap-method-*.ui
 %{_datadir}/nm-applet/ws-*.ui
-%{_datadir}/nm-applet/nag-user-dialog.ui
 %{_datadir}/nm-applet/nm-connection-editor.ui
 %{_datadir}/icons/hicolor/*/apps/nm-device-*.*
 %{_datadir}/icons/hicolor/*/apps/nm-no-connection.*
@@ -222,7 +220,18 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
-* Tue Aug 07 2013 Dennis Gilmore <dennis@ausil.us> - 0.9.9.0-4.git20130515
+* Fri Sep 13 2013 Dan Williams <dcbw@redhat.com> - 0.9.9.0-6.git20130906
+- libnm-gtk: fix for enabling the Apply button for PEAP and TTLS (rh #1000564)
+- libnm-gtk: only save CA certificate ignored value when connection is saved
+- editor: fix display of VLAN parent interface
+
+* Fri Sep 06 2013 Dan Williams <dcbw@redhat.com> - 0.9.9.0-5.git20130906
+- editor: fix missing user/password when re-editing a connection (rh #1000564)
+- editor: fix handling of missing CA certificate prompts (rh #758076) (rh #809489)
+- editor: fix handling of bonding modes (rh #953076)
+- applet/editor: add InfiniBand device support (rh #867273)
+
+* Tue Aug 06 2013 Dennis Gilmore <dennis@ausil.us> - 0.9.9.0-4.git20130515
 - rebuild for soname bump in gnome-bluetooth
 
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.9.9.0-3.git20130515
