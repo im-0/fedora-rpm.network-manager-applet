@@ -5,13 +5,13 @@
 %define nm_version      1:0.9.9.0
 %define obsoletes_ver   1:0.9.7
 
-%define snapshot .git20130913
+%define snapshot .git20131028
 %define realversion 0.9.9.0
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: 0.9.9.0
-Release: 6%{snapshot}%{?dist}
+Release: 7%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -220,6 +220,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Mon Oct 28 2013 Dan Winship <danw@redhat.com> - 0.9.9.0-7.git20131028
+- update to latest git snapshot
+- re-enable nm-applet on certain non-GNOME-Shell desktops (rh #1017471)
+
 * Fri Sep 13 2013 Dan Williams <dcbw@redhat.com> - 0.9.9.0-6.git20130906
 - libnm-gtk: fix for enabling the Apply button for PEAP and TTLS (rh #1000564)
 - libnm-gtk: only save CA certificate ignored value when connection is saved
