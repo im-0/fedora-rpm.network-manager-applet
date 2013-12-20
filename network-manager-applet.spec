@@ -11,7 +11,7 @@
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: 0.9.9.0
-Release: 7%{snapshot}%{?dist}
+Release: 8%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -46,10 +46,6 @@ BuildRequires: libnotify-devel >= 0.4
 BuildRequires: automake autoconf intltool libtool
 BuildRequires: gtk-doc
 BuildRequires: desktop-file-utils
-# No bluetooth on s390
-%ifnarch s390 s390x
-BuildRequires: gnome-bluetooth-libs-devel >= 2.27.7.1-1
-%endif
 BuildRequires: iso-codes-devel
 BuildRequires: libgudev1-devel >= 147
 BuildRequires: libsecret-devel >= 0.12
@@ -110,7 +106,7 @@ autoreconf -i -f
 intltoolize --force
 %configure \
     --disable-static \
-    --with-bluetooth \
+    --without-bluetooth \
     --enable-more-warnings=yes \
     --disable-migration
 make %{?_smp_mflags}
@@ -122,7 +118,6 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/gnome-vpn-properties
 %find_lang nm-applet
 cat nm-applet.lang >> %{name}.lang
 
-rm -f $RPM_BUILD_ROOT%{_libdir}/gnome-bluetooth/plugins/*.la
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
 # validate .desktop and autostart files
@@ -200,9 +195,6 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/glib-2.0/schemas/org.gnome.nm-applet.gschema.xml
 %{_mandir}/man1/nm-connection-editor*
 %dir %{_datadir}/gnome-vpn-properties
-%ifnarch s390 s390x
-%{_libdir}/gnome-bluetooth/plugins/*
-%endif
 
 %files -n libnm-gtk
 %defattr(-,root,root,0755)
@@ -220,6 +212,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Fri Dec 20 2013 Kevin Fenzi <kevin@scrye.com> 0.9.9.0-8.git20131028
+- Remove bluetooth plugin, doesn't work with new gnome-bluetooth/bluez5
+
 * Mon Oct 28 2013 Dan Winship <danw@redhat.com> - 0.9.9.0-7.git20131028
 - update to latest git snapshot
 - re-enable nm-applet on certain non-GNOME-Shell desktops (rh #1017471)
