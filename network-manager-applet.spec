@@ -2,10 +2,11 @@
 %define glib2_version   2.32.0
 %define dbus_version    1.4
 %define dbus_glib_version 0.86
-%define nm_version      1:0.9.9.0
+%define nm_version      1:0.9.9.0-26
 %define obsoletes_ver   1:0.9.7
 
-%define snapshot .git20131028
+%define snapshot .git20140123
+%define git_sha .5d4f17e
 %define realversion 0.9.9.0
 
 Name: network-manager-applet
@@ -17,7 +18,7 @@ License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
 Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
-Source: http://ftp.gnome.org/pub/GNOME/sources/network-manager-applet/0.9/%{name}-%{realversion}%{snapshot}.tar.bz2
+Source: http://ftp.gnome.org/pub/GNOME/sources/network-manager-applet/0.9/%{name}-%{realversion}%{snapshot}%{git_sha}.tar.bz2
 Patch0: nm-applet-no-notifications.patch
 Patch1: nm-applet-wifi-dialog-ui-fixes.patch
 Patch2: applet-ignore-deprecated.patch
@@ -212,6 +213,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Thu Jan 23 2014 Jiří Klimeš <jklimes@redhat.com> - 0.9.9.0-8.git20140123
+- update to latest git snapshot (git20140123 sha:5d4f17e)
+- applet: fix crash when "CA certificate is not required" (rh #1055535)
+
 * Fri Dec 20 2013 Kevin Fenzi <kevin@scrye.com> 0.9.9.0-8.git20131028
 - Remove bluetooth plugin, doesn't work with new gnome-bluetooth/bluez5
 
