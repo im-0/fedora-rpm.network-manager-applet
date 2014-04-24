@@ -5,14 +5,14 @@
 %define nm_version      1:0.9.9.0-26
 %define obsoletes_ver   1:0.9.7
 
-%define snapshot .git20140123
-%define git_sha .5d4f17e
+%define snapshot .git20140424
+%define git_sha .9ba9c3e
 %define realversion 0.9.9.0
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: 0.9.9.0
-Release: 9%{snapshot}%{?dist}
+Release: 10%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -215,6 +215,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Thu Apr 24 2014 Jiří Klimeš <jklimes@redhat.com> - 0.9.9.0-10.git20140424
+- update to latest git snapshot (git20140424 sha:9ba9c3e)
+
 * Mon Mar 24 2014 Dan Winship <danw@redhat.com> - 0.9.9.0-9.git20140123
 - Add ModemManager-glib-devel to BuildRequires
 
