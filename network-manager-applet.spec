@@ -12,7 +12,7 @@
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: 0.9.9.0
-Release: 10%{snapshot}%{?dist}
+Release: 11%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -29,7 +29,6 @@ Requires: libnm-gtk = %{version}-%{release}
 Requires: dbus >= 1.4
 Requires: dbus-glib >= 0.100
 Requires: libnotify >= 0.4.3
-Requires: gnome-icon-theme
 Requires: nm-connection-editor = %{version}-%{release}
 
 BuildRequires: NetworkManager-devel >= %{nm_version}
@@ -62,7 +61,6 @@ Requires: NetworkManager-glib >= %{nm_version}
 Requires: libnm-gtk = %{version}-%{release}
 Requires: dbus >= 1.4
 Requires: dbus-glib >= 0.94
-Requires: gnome-icon-theme
 Requires(post): /usr/bin/gtk-update-icon-cache
 
 %description -n nm-connection-editor
@@ -215,6 +213,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Wed May 07 2014 Kalev Lember <kalevlember@gmail.com> - 0.9.9.0-11.git20140424
+- Drop gnome-icon-theme dependency
+
 * Thu Apr 24 2014 Jiří Klimeš <jklimes@redhat.com> - 0.9.9.0-10.git20140424
 - update to latest git snapshot (git20140424 sha:9ba9c3e)
 
