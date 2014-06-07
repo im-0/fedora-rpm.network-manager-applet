@@ -12,7 +12,7 @@
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: 0.9.9.0
-Release: 11%{snapshot}%{?dist}
+Release: 12%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -213,6 +213,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.9.9.0-12.git20140424
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Wed May 07 2014 Kalev Lember <kalevlember@gmail.com> - 0.9.9.0-11.git20140424
 - Drop gnome-icon-theme dependency
 
