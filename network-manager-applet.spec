@@ -12,7 +12,7 @@
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: 0.9.9.0
-Release: 13%{snapshot}%{?dist}
+Release: 14%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -213,6 +213,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Sun Aug 17 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.9.9.0-14.git20140424
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
+
 * Tue Jul 22 2014 Kalev Lember <kalevlember@gmail.com> - 0.9.9.0-13.git20140424
 - Rebuilt for gobject-introspection 1.41.4
 
