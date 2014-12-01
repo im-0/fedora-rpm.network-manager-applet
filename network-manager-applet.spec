@@ -5,14 +5,14 @@
 %define nm_version      1:0.9.9.0-26
 %define obsoletes_ver   1:0.9.7
 
-%define snapshot .git20140424
-%define git_sha .9ba9c3e
-%define realversion 0.9.9.0
+%define snapshot .git20141201
+%define git_sha .be5a9db
+%define realversion 0.9.10.1
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
-Version: 0.9.9.0
-Release: 15%{snapshot}%{?dist}
+Version: 0.9.10.1
+Release: 1%{snapshot}%{git_sha}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -215,6 +215,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Mon Dec  1 2014 Jiří Klimeš <jklimes@redhat.com> - 0.9.10.1-1.git20141201.be5a9db
+- update to latest git snapshot of 0.9.10 (git20141201 sha:be5a9db)
+
 * Wed Sep 03 2014 Kalev Lember <kalevlember@gmail.com> - 0.9.9.0-15.git20140424
 - Backport a patch to hide nm-connection-editor launcher in GNOME
 
