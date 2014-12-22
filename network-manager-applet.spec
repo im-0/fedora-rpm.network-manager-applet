@@ -2,27 +2,26 @@
 %define glib2_version   2.32.0
 %define dbus_version    1.4
 %define dbus_glib_version 0.86
-%define nm_version      1:0.9.9.0-26
+%define nm_version      1:0.9.9.95
 %define obsoletes_ver   1:0.9.7
 
-%define snapshot .git20141201
-%define git_sha .be5a9db
-%define realversion 0.9.10.1
+%define snapshot %{nil}
+%define git_sha %{nil}
+%define realversion 1.0.0
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
-Version: 0.9.10.1
+Version: 1.0.0
 Release: 1%{snapshot}%{git_sha}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
 Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
-Source: http://ftp.gnome.org/pub/GNOME/sources/network-manager-applet/0.9/%{name}-%{realversion}%{snapshot}%{git_sha}.tar.bz2
+Source: https://download.gnome.org/sources/network-manager-applet/1.0/%{name}-%{realversion}%{snapshot}%{git_sha}.tar.xz
 Patch0: nm-applet-no-notifications.patch
 Patch1: nm-applet-wifi-dialog-ui-fixes.patch
 Patch2: applet-ignore-deprecated.patch
-Patch3: 0001-connection-editor-Don-t-show-launcher-in-GNOME.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: NetworkManager-glib >= %{nm_version}
@@ -101,7 +100,6 @@ nm-applet, nm-connection-editor, and the GNOME control center.
 %patch0 -p1 -b .no-notifications
 %patch1 -p1 -b .applet-wifi-ui
 %patch2 -p1 -b .no-deprecated
-%patch3 -p1 -b .onlyshowin
 
 %build
 autoreconf -i -f
@@ -215,6 +213,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Mon Dec 22 2014 Dan Williams <dcbw@redhat.com> - 1.0.0-1
+- Update to 1.0
+
 * Mon Dec  1 2014 Jiří Klimeš <jklimes@redhat.com> - 0.9.10.1-1.git20141201.be5a9db
 - update to latest git snapshot of 0.9.10 (git20141201 sha:be5a9db)
 
