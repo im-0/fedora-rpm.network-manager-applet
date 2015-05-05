@@ -7,12 +7,12 @@
 
 %define snapshot %{nil}
 %define git_sha %{nil}
-%define realversion 1.0.0
+%define realversion 1.0.2
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
-Version: 1.0.0
-Release: 2%{snapshot}%{git_sha}%{?dist}
+Version: %{realversion}
+Release: 1%{snapshot}%{git_sha}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -213,6 +213,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Tue May 5 2015 Lubomir Rintel <lkundrak@v3.sk> - 1.0.2-1
+- Update to 1.0.2 release
+
 * Sat Feb 21 2015 Till Maas <opensource@till.name> - 1.0.0-2
 - Rebuilt for Fedora 23 Change
   https://fedoraproject.org/wiki/Changes/Harden_all_packages_with_position-independent_code
