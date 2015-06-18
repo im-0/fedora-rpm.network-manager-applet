@@ -1,24 +1,24 @@
 %define gtk3_version    3.0.1
 %define glib2_version   2.32.0
 %define dbus_version    1.4
-%define dbus_glib_version 0.86
-%define nm_version      1:0.9.9.95
+%define dbus_glib_version 0.100
+%define nm_version      1:1.0.0
 %define obsoletes_ver   1:0.9.7
 
-%define snapshot %{nil}
-%define git_sha %{nil}
-%define realversion 1.0.2
+%define snapshot .git20160615
+%define git_sha .28a0e28
+%define realversion 1.0.4
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: %{realversion}
-Release: 2%{snapshot}%{git_sha}%{?dist}
+Release: 0.1%{snapshot}%{git_sha}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
 Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
-Source: https://download.gnome.org/sources/network-manager-applet/1.0/%{name}-%{realversion}%{snapshot}%{git_sha}.tar.xz
+Source: https://download.gnome.org/sources/network-manager-applet/1.0/%{name}-%{realversion}%{snapshot}%{git_sha}.tar.bz2
 Patch0: nm-applet-no-notifications.patch
 Patch1: nm-applet-wifi-dialog-ui-fixes.patch
 Patch2: applet-ignore-deprecated.patch
@@ -95,7 +95,7 @@ nm-applet, nm-connection-editor, and the GNOME control center.
 
 
 %prep
-%setup -q -n network-manager-applet-%{realversion}
+%setup -q -n network-manager-applet-1.0.3
 
 %patch0 -p1 -b .no-notifications
 %patch1 -p1 -b .applet-wifi-ui
@@ -213,6 +213,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Thu Jun 18 2015 Lubomir Rintel <lkundrak@v3.sk> - 1.0.4-0.1.git20160615.28a0e28
+- Update to a later Git snapshot
+
 * Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
