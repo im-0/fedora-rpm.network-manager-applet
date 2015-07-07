@@ -5,8 +5,8 @@
 %define nm_version      1:1.0.0
 %define obsoletes_ver   1:0.9.7
 
-%define snapshot .git20160615
-%define git_sha .28a0e28
+%define snapshot .git20160702
+%define git_sha .25368df
 %define realversion 1.0.4
 
 Name: network-manager-applet
@@ -213,6 +213,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Tue Jul 07 2015 Lubomir Rintel <lkundrak@v3.sk> - 1.0.4-0.1.git20160702.25368df
+- Update to a later Git snapshot
+
 * Thu Jun 18 2015 Lubomir Rintel <lkundrak@v3.sk> - 1.0.4-0.1.git20160615.28a0e28
 - Update to a later Git snapshot
 
