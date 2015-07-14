@@ -5,20 +5,20 @@
 %define nm_version      1:1.0.0
 %define obsoletes_ver   1:0.9.7
 
-%define snapshot .git20160702
-%define git_sha .25368df
+%define snapshot %{nil}
+%define git_sha %{nil}
 %define realversion 1.0.4
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: %{realversion}
-Release: 0.1%{snapshot}%{git_sha}%{?dist}
+Release: 1%{snapshot}%{git_sha}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
 Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
-Source: https://download.gnome.org/sources/network-manager-applet/1.0/%{name}-%{realversion}%{snapshot}%{git_sha}.tar.bz2
+Source: https://download.gnome.org/sources/network-manager-applet/1.0/%{name}-%{realversion}%{snapshot}%{git_sha}.tar.xz
 Patch0: nm-applet-no-notifications.patch
 Patch1: nm-applet-wifi-dialog-ui-fixes.patch
 Patch2: applet-ignore-deprecated.patch
@@ -95,7 +95,7 @@ nm-applet, nm-connection-editor, and the GNOME control center.
 
 
 %prep
-%setup -q -n network-manager-applet-1.0.3
+%setup -q -n network-manager-applet-%{realversion}
 
 %patch0 -p1 -b .no-notifications
 %patch1 -p1 -b .applet-wifi-ui
@@ -213,6 +213,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Tue Jul 14 2015 Lubomir Rintel <lkundrak@v3.sk> - 1.0.4-1
+- Update to 1.0.4 release
+
 * Tue Jul 07 2015 Lubomir Rintel <lkundrak@v3.sk> - 1.0.4-0.1.git20160702.25368df
 - Update to a later Git snapshot
 
