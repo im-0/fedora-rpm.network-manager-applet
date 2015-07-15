@@ -12,7 +12,7 @@
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: %{realversion}
-Release: 1%{snapshot}%{git_sha}%{?dist}
+Release: 2%{snapshot}%{git_sha}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -22,6 +22,7 @@ Source: https://download.gnome.org/sources/network-manager-applet/1.0/%{name}-%{
 Patch0: nm-applet-no-notifications.patch
 Patch1: nm-applet-wifi-dialog-ui-fixes.patch
 Patch2: applet-ignore-deprecated.patch
+Patch3: 0001-libnm-gtk-add-symbol-versions.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: NetworkManager-glib >= %{nm_version}
@@ -100,6 +101,7 @@ nm-applet, nm-connection-editor, and the GNOME control center.
 %patch0 -p1 -b .no-notifications
 %patch1 -p1 -b .applet-wifi-ui
 %patch2 -p1 -b .no-deprecated
+%patch3 -p1 -b .libnm-gtk-add-symbol-versions
 
 %build
 autoreconf -i -f
@@ -213,6 +215,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Wed Jul 15 2015 Lubomir Rintel <lkundrak@v3.sk> - 1.0.4-2
+- Version the newly added ABI
+
 * Tue Jul 14 2015 Lubomir Rintel <lkundrak@v3.sk> - 1.0.4-1
 - Update to 1.0.4 release
 
