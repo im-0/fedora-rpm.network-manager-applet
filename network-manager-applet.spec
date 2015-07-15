@@ -1,40 +1,32 @@
 %define gtk3_version    3.0.1
 %define glib2_version   2.32.0
-%define dbus_version    1.4
-%define dbus_glib_version 0.100
 %define nm_version      1:1.0.0
 %define obsoletes_ver   1:0.9.7
 
-%define snapshot %{nil}
-%define realversion 1.0.6
+%define snapshot .20150903git807cbdf
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
-Version: %{realversion}
-Release: 4%{snapshot}%{?dist}
+Version: 1.2.0
+Release: 0.1%{?snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
 Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
-Source: https://download.gnome.org/sources/network-manager-applet/1.0/%{name}-%{realversion}%{snapshot}.tar.xz
+Source: https://download.gnome.org/sources/network-manager-applet/1.2/%{name}-%{version}.tar.xz
 Patch0: nm-applet-no-notifications.patch
-Patch1: rh1254043-applet-password-crash.patch
-Patch2: rh1247885-tooltip-for-connect-button.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: NetworkManager-glib >= %{nm_version}
-Requires: libnm-gtk = %{version}-%{release}
-Requires: dbus >= 1.4
-Requires: dbus-glib >= 0.100
+Requires: libnma%{?_isa} = %{version}-%{release}
 Requires: libnotify >= 0.4.3
 Requires: nm-connection-editor = %{version}-%{release}
 
 BuildRequires: NetworkManager-devel >= %{nm_version}
 BuildRequires: NetworkManager-glib-devel >= %{nm_version}
+BuildRequires: NetworkManager-libnm-devel >= %{nm_version}
 BuildRequires: ModemManager-glib-devel >= 1.0
-BuildRequires: dbus-devel >= %{dbus_version}
-BuildRequires: dbus-glib-devel >= %{dbus_glib_version}
 BuildRequires: glib2-devel >= %{glib2_version}
 BuildRequires: gtk3-devel >= %{gtk3_version}
 BuildRequires: libsecret-devel
@@ -57,9 +49,7 @@ for use with NetworkManager.
 %package -n nm-connection-editor
 Summary: A network connection configuration editor for NetworkManager
 Requires: NetworkManager-glib >= %{nm_version}
-Requires: libnm-gtk = %{version}-%{release}
-Requires: dbus >= 1.4
-Requires: dbus-glib >= 0.94
+Requires: libnma%{?_isa} = %{version}-%{release}
 Requires(post): /usr/bin/gtk-update-icon-cache
 
 %description -n nm-connection-editor
@@ -90,14 +80,41 @@ Requires: pkgconfig
 
 %description -n libnm-gtk-devel
 This package contains private header and pkg-config files to be used only by
+GNOME control center.
+
+This package is obsoleted by libnma.
+
+
+%package -n libnma
+Summary: Private libraries for NetworkManager GUI support
+Group: Development/Libraries
+Requires: gtk3 >= %{gtk3_version}
+Requires: mobile-broadband-provider-info >= 0.20090602
+Obsoletes: NetworkManager-gtk < %{obsoletes_ver}
+
+%description -n libnma
+This package contains private libraries to be used only by nm-applet,
+nm-connection editor, and the GNOME Control Center.
+
+%package -n libnma-devel
+Summary: Private header files for NetworkManager GUI support
+Group: Development/Libraries
+Requires: NetworkManager-devel >= %{nm_version}
+Requires: NetworkManager-libnm-devel >= %{nm_version}
+Obsoletes: NetworkManager-gtk-devel < %{obsoletes_ver}
+Requires: libnma = %{version}-%{release}
+Requires: gtk3-devel
+Requires: pkgconfig
+
+%description -n libnma-devel
+This package contains private header and pkg-config files to be used only by
 nm-applet, nm-connection-editor, and the GNOME control center.
 
+This package deprecates libnm-gtk.
 
 %prep
-%setup -q -n network-manager-applet-%{realversion}
+%setup -q
 %patch0 -p1 -b .no-notifications
-%patch1 -p1 -b .rh1254043-applet-password-crash
-%patch2 -p1
 
 %build
 autoreconf -i -f
@@ -157,7 +174,6 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 
 %files
 %defattr(-,root,root,0755)
-%doc COPYING NEWS AUTHORS README CONTRIBUTING
 %dir %{_datadir}/nm-applet
 %{_bindir}/nm-applet
 %{_datadir}/applications/nm-applet.desktop
@@ -177,6 +193,8 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/GConf/gsettings/nm-applet.convert
 %{_sysconfdir}/xdg/autostart/nm-applet.desktop
 %{_mandir}/man1/nm-applet*
+%doc NEWS AUTHORS README CONTRIBUTING
+%license COPYING
 
 # Yes, lang files for the applet go in nm-connection-editor RPM since it
 # is the RPM that everything else depends on
@@ -211,7 +229,28 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_libdir}/libnm-gtk.so
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
+%files -n libnma
+%defattr(-,root,root,0755)
+%{_libdir}/libnma.so.*
+%dir %{_datadir}/libnma
+%{_datadir}/libnma/*.ui
+%{_libdir}/girepository-1.0/NMA-1.0.typelib
+
+%files -n libnma-devel
+%defattr(-,root,root,0755)
+%dir %{_includedir}/libnma
+%{_includedir}/libnma/*.h
+%{_libdir}/pkgconfig/libnma.pc
+%{_libdir}/libnma.so
+%{_datadir}/gir-1.0/NMA-1.0.gir
+
+
 %changelog
+* Thu Sep  3 2015 Lubomir Rintel <lkundrak@v3.sk> - 1.2.0-0.1.20150903git807cbdf
+- Update to 1.2 git snapshot:
+- Add libnma subpackages
+- Add support for libnm-based properties plugins
+
 * Wed Sep  2 2015 Thomas Haller <thaller@redhat.com> - 1.0.6-4
 - show tooltip when connect button is disabled due to invalid connection (rh #1247885)
 
