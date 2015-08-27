@@ -11,7 +11,7 @@
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: %{realversion}
-Release: 1%{snapshot}%{?dist}
+Release: 2%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -93,8 +93,7 @@ nm-applet, nm-connection-editor, and the GNOME control center.
 
 %prep
 %setup -q -n network-manager-applet-%{realversion}
-
-#patch0 -p1 -b .no-notifications
+%patch0 -p1 -b .no-notifications
 
 %build
 autoreconf -i -f
@@ -209,7 +208,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
-* Thu Aug 27 2015 Lubomir Rintel <lkundrak@v3.sk> - 1:1.0.6
+* Thu Aug 27 2015 Lubomir Rintel <lkundrak@v3.sk> - 1.0.6-2
+- Re-add an accidentally removed patch
+
+* Thu Aug 27 2015 Lubomir Rintel <lkundrak@v3.sk> - 1.0.6-1
 - Update to 1.0.6 release
 
 * Wed Jul 15 2015 Lubomir Rintel <lkundrak@v3.sk> - 1.0.4-2
