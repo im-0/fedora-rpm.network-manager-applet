@@ -6,23 +6,19 @@
 %define obsoletes_ver   1:0.9.7
 
 %define snapshot %{nil}
-%define git_sha %{nil}
-%define realversion 1.0.4
+%define realversion 1.0.6
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: %{realversion}
-Release: 2%{snapshot}%{git_sha}%{?dist}
+Release: 1%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
 Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
-Source: https://download.gnome.org/sources/network-manager-applet/1.0/%{name}-%{realversion}%{snapshot}%{git_sha}.tar.xz
+Source: https://download.gnome.org/sources/network-manager-applet/1.0/%{name}-%{realversion}%{snapshot}.tar.xz
 Patch0: nm-applet-no-notifications.patch
-Patch1: nm-applet-wifi-dialog-ui-fixes.patch
-Patch2: applet-ignore-deprecated.patch
-Patch3: 0001-libnm-gtk-add-symbol-versions.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: NetworkManager-glib >= %{nm_version}
@@ -98,10 +94,7 @@ nm-applet, nm-connection-editor, and the GNOME control center.
 %prep
 %setup -q -n network-manager-applet-%{realversion}
 
-%patch0 -p1 -b .no-notifications
-%patch1 -p1 -b .applet-wifi-ui
-%patch2 -p1 -b .no-deprecated
-%patch3 -p1 -b .libnm-gtk-add-symbol-versions
+#patch0 -p1 -b .no-notifications
 
 %build
 autoreconf -i -f
@@ -196,6 +189,7 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/icons/hicolor/*/apps/nm-no-connection.*
 %{_datadir}/icons/hicolor/16x16/apps/nm-vpn-standalone-lock.png
 %{_datadir}/glib-2.0/schemas/org.gnome.nm-applet.gschema.xml
+%{_datadir}/appdata/org.gnome.nm-connection-editor.appdata.xml
 %{_mandir}/man1/nm-connection-editor*
 %dir %{_datadir}/gnome-vpn-properties
 
@@ -215,6 +209,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Thu Aug 27 2015 Lubomir Rintel <lkundrak@v3.sk> - 1:1.0.6
+- Update to 1.0.6 release
+
 * Wed Jul 15 2015 Lubomir Rintel <lkundrak@v3.sk> - 1.0.4-2
 - Version the newly added ABI
 
