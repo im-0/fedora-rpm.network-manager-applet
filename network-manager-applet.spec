@@ -11,7 +11,7 @@
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: %{realversion}
-Release: 2%{snapshot}%{?dist}
+Release: 3%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -19,6 +19,7 @@ Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
 Source: https://download.gnome.org/sources/network-manager-applet/1.0/%{name}-%{realversion}%{snapshot}.tar.xz
 Patch0: nm-applet-no-notifications.patch
+Patch1: rh1254043-applet-password-crash.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: NetworkManager-glib >= %{nm_version}
@@ -94,6 +95,7 @@ nm-applet, nm-connection-editor, and the GNOME control center.
 %prep
 %setup -q -n network-manager-applet-%{realversion}
 %patch0 -p1 -b .no-notifications
+%patch1 -p1 -b .rh1254043-applet-password-crash
 
 %build
 autoreconf -i -f
@@ -208,6 +210,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Tue Sep  1 2015 Jiří Klimeš <jklimes@redhat.com> - 1.0.6-3
+- libnm-gtk: fix a possible crash on password widget destroy (rh #1254043)
+
 * Thu Aug 27 2015 Lubomir Rintel <lkundrak@v3.sk> - 1.0.6-2
 - Re-add an accidentally removed patch
 
