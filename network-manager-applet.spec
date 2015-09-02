@@ -11,7 +11,7 @@
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: %{realversion}
-Release: 3%{snapshot}%{?dist}
+Release: 4%{snapshot}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -20,6 +20,7 @@ Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 Source: https://download.gnome.org/sources/network-manager-applet/1.0/%{name}-%{realversion}%{snapshot}.tar.xz
 Patch0: nm-applet-no-notifications.patch
 Patch1: rh1254043-applet-password-crash.patch
+Patch2: rh1247885-tooltip-for-connect-button.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: NetworkManager-glib >= %{nm_version}
@@ -96,6 +97,7 @@ nm-applet, nm-connection-editor, and the GNOME control center.
 %setup -q -n network-manager-applet-%{realversion}
 %patch0 -p1 -b .no-notifications
 %patch1 -p1 -b .rh1254043-applet-password-crash
+%patch2 -p1
 
 %build
 autoreconf -i -f
@@ -210,6 +212,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Wed Sep  2 2015 Thomas Haller <thaller@redhat.com> - 1.0.6-4
+- show tooltip when connect button is disabled due to invalid connection (rh #1247885)
+
 * Tue Sep  1 2015 Jiří Klimeš <jklimes@redhat.com> - 1.0.6-3
 - libnm-gtk: fix a possible crash on password widget destroy (rh #1254043)
 
