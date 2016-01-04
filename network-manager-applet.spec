@@ -1,9 +1,9 @@
-%define gtk3_version    3.0.1
-%define glib2_version   2.32.0
-%define nm_version      1:1.0.0
-%define obsoletes_ver   1:0.9.7
+%global gtk3_version    3.0.1
+%global glib2_version   2.32.0
+%global nm_version      1:1.1.0
+%global obsoletes_ver   1:0.9.7
 
-%define snapshot .20150903git807cbdf
+%global snapshot .20150903git807cbdf
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
