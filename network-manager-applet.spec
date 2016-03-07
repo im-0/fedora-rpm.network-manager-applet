@@ -3,7 +3,7 @@
 %global nm_version      1:1.1.0
 %global obsoletes_ver   1:0.9.7
 
-%global snapshot .beta1
+%global snapshot .beta2
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
@@ -14,8 +14,9 @@ License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
 Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
-Source: https://download.gnome.org/sources/network-manager-applet/1.1/%{name}-1.1.90.tar.xz
+Source: https://download.gnome.org/sources/network-manager-applet/1.1/%{name}-1.1.91.tar.xz
 Patch0: nm-applet-no-notifications.patch
+Patch1: 0001-applet-workaround-crash-in-applet-code.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: NetworkManager-glib >= %{nm_version}
@@ -113,8 +114,9 @@ nm-applet, nm-connection-editor, and the GNOME control center.
 This package deprecates libnm-gtk.
 
 %prep
-%setup -q -n %{name}-1.1.90
-%patch0 -p1 -b .no-notifications
+%setup -q -n %{name}-1.1.91
+%patch0 -p1
+%patch1 -p1
 
 %build
 autoreconf -i -f
@@ -246,6 +248,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 
 
 %changelog
+* Mon Mar 07 2016 Lubomir Rintel <lkundrak@v3.sk> - 1.2.0-0.3.beta2
+- Update to network-manager-applet 1.2-beta2
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.0-0.3.beta1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
