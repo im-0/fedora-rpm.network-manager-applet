@@ -37,7 +37,6 @@ BuildRequires: /usr/bin/autopoint
 BuildRequires: pkgconfig
 BuildRequires: libnotify-devel >= 0.4
 BuildRequires: automake autoconf intltool libtool
-BuildRequires: gtk-doc
 BuildRequires: desktop-file-utils
 BuildRequires: iso-codes-devel
 BuildRequires: libgudev1-devel >= 147
