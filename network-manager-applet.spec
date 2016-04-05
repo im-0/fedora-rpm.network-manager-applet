@@ -3,7 +3,7 @@
 %global nm_version      1:1.1.0
 %global obsoletes_ver   1:0.9.7
 
-%global snapshot .beta3
+%global snapshot .rc1
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
@@ -14,7 +14,7 @@ License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
 Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
-Source: https://download.gnome.org/sources/network-manager-applet/1.1/%{name}-1.1.92.tar.xz
+Source: https://download.gnome.org/sources/network-manager-applet/1.1/%{name}-1.1.93.tar.xz
 Patch0: nm-applet-no-notifications.patch
 
 Requires: NetworkManager >= %{nm_version}
@@ -112,7 +112,7 @@ nm-applet, nm-connection-editor, and the GNOME control center.
 This package deprecates libnm-gtk.
 
 %prep
-%setup -q -n %{name}-1.1.92
+%setup -q -n %{name}-1.1.93
 %patch0 -p1
 
 %build
@@ -245,6 +245,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 
 
 %changelog
+* Tue Apr  5 2016 Lubomir Rintel <lkundrak@v3.sk> - 1.2.0-0.3.rc1
+- Update to network-manager-applet 1.2-rc1
+
 * Tue Mar 29 2016 Lubomir Rintel <lkundrak@v3.sk> - 1.2.0-0.3.beta3
 - Update to network-manager-applet 1.2-beta3
 
