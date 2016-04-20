@@ -120,7 +120,7 @@ autoreconf -i -f
 intltoolize --force
 %configure \
     --disable-static \
-    --enable-more-warnings=yes \
+    --enable-more-warnings=yes
 make %{?_smp_mflags}
 
 %install
