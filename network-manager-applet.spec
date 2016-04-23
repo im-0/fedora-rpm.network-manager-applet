@@ -3,12 +3,10 @@
 %global nm_version      1:1.1.0
 %global obsoletes_ver   1:0.9.7
 
-%global snapshot .rc1
-
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: 1.2.0
-Release: 1%{?snapshot}%{?dist}
+Release: 1%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
