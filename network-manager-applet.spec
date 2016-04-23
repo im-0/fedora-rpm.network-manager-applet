@@ -47,7 +47,6 @@ for use with NetworkManager.
 Summary: A network connection configuration editor for NetworkManager
 Requires: NetworkManager-glib >= %{nm_version}
 Requires: libnma%{?_isa} = %{version}-%{release}
-Requires(post): /usr/bin/gtk-update-icon-cache
 
 %description -n nm-connection-editor
 This package contains a network configuration editor and Bluetooth modem
