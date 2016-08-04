@@ -5,7 +5,7 @@
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
-Version: 1.2.2
+Version: 1.2.4
 Release: 1%{?dist}
 Group: Applications/System
 License: GPLv2+
@@ -239,6 +239,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 
 
 %changelog
+* Thu Aug  4 2016 Francesco Giudici <fgiudici@redhat.com> - 1.2.4-1
+- Update to network-manager-applet 1.2.4 release
+
 * Wed May 11 2016 Lubomir Rintel <lkundrak@v3.sk> - 1.2.2-1
 - Update to network-manager-applet 1.2.2 release
 
