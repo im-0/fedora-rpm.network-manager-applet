@@ -5,14 +5,14 @@
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
-Version: 1.2.4
+Version: 1.4.0
 Release: 1%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
 Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
-Source: https://download.gnome.org/sources/network-manager-applet/1.2/%{name}-%{version}.tar.xz
+Source: https://download.gnome.org/sources/network-manager-applet/1.4/%{name}-%{version}.tar.xz
 Patch0: nm-applet-no-notifications.patch
 
 Requires: NetworkManager >= %{nm_version}
@@ -38,6 +38,7 @@ BuildRequires: desktop-file-utils
 BuildRequires: iso-codes-devel
 BuildRequires: libgudev1-devel >= 147
 BuildRequires: libsecret-devel >= 0.12
+BuildRequires: jansson-devel
 
 %description
 This package contains a network control and status notification area applet
@@ -203,7 +204,7 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/icons/hicolor/*/apps/nm-no-connection.*
 %{_datadir}/icons/hicolor/16x16/apps/nm-vpn-standalone-lock.png
 %{_datadir}/glib-2.0/schemas/org.gnome.nm-applet.gschema.xml
-%{_datadir}/appdata/org.gnome.nm-connection-editor.appdata.xml
+%{_datadir}/appdata/nm-connection-editor.appdata.xml
 %{_mandir}/man1/nm-connection-editor*
 %dir %{_datadir}/gnome-vpn-properties
 
@@ -239,6 +240,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 
 
 %changelog
+* Wed Aug 24 2016 Lubomir Rintel <lkundrak@v3.sk> - 1.4.0-1
+- Update to network-manager-applet 1.4.0 release
+
 * Thu Aug  4 2016 Francesco Giudici <fgiudici@redhat.com> - 1.2.4-1
 - Update to network-manager-applet 1.2.4 release
 
