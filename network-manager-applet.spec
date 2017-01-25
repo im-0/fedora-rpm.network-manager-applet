@@ -5,7 +5,7 @@
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
-Version: 1.4.0
+Version: 1.4.4
 Release: 1%{?dist}
 Group: Applications/System
 License: GPLv2+
@@ -168,13 +168,8 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 
 %files
 %defattr(-,root,root,0755)
-%dir %{_datadir}/nm-applet
 %{_bindir}/nm-applet
 %{_datadir}/applications/nm-applet.desktop
-%{_datadir}/nm-applet/8021x.ui
-%{_datadir}/nm-applet/info.ui
-%{_datadir}/nm-applet/gsm-unlock.ui
-%{_datadir}/nm-applet/keyring.png
 %{_datadir}/icons/hicolor/22x22/apps/nm-adhoc.png
 %{_datadir}/icons/hicolor/22x22/apps/nm-mb-roam.png
 %{_datadir}/icons/hicolor/22x22/apps/nm-secure-lock.png
@@ -193,13 +188,8 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 # Yes, lang files for the applet go in nm-connection-editor RPM since it
 # is the RPM that everything else depends on
 %files -n nm-connection-editor -f %{name}.lang
-%dir %{_datadir}/nm-applet
 %{_bindir}/nm-connection-editor
 %{_datadir}/applications/nm-connection-editor.desktop
-%{_datadir}/nm-applet/ce-*.ui
-%{_datadir}/nm-applet/eap-method-*.ui
-%{_datadir}/nm-applet/ws-*.ui
-%{_datadir}/nm-applet/nm-connection-editor.ui
 %{_datadir}/icons/hicolor/*/apps/nm-device-*.*
 %{_datadir}/icons/hicolor/*/apps/nm-no-connection.*
 %{_datadir}/icons/hicolor/16x16/apps/nm-vpn-standalone-lock.png
@@ -211,8 +201,6 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %files -n libnm-gtk
 %defattr(-,root,root,0755)
 %{_libdir}/libnm-gtk.so.*
-%dir %{_datadir}/libnm-gtk
-%{_datadir}/libnm-gtk/*.ui
 %{_libdir}/girepository-1.0/NMGtk-1.0.typelib
 
 %files -n libnm-gtk-devel
@@ -226,8 +214,6 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %files -n libnma
 %defattr(-,root,root,0755)
 %{_libdir}/libnma.so.*
-%dir %{_datadir}/libnma
-%{_datadir}/libnma/*.ui
 %{_libdir}/girepository-1.0/NMA-1.0.typelib
 
 %files -n libnma-devel
@@ -240,6 +226,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 
 
 %changelog
+* Wed Jan 25 2017 Lubomir Rintel <lkundrak@v3.sk> - 1.4.4-1
+- Update to network-manager-applet 1.4.4 release
+
 * Wed Aug 24 2016 Lubomir Rintel <lkundrak@v3.sk> - 1.4.0-1
 - Update to network-manager-applet 1.4.0 release
 
