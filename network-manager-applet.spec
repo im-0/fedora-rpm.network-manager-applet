@@ -167,7 +167,6 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 
 %files
-%defattr(-,root,root,0755)
 %{_bindir}/nm-applet
 %{_datadir}/applications/nm-applet.desktop
 %{_datadir}/icons/hicolor/22x22/apps/nm-adhoc.png
@@ -199,12 +198,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %dir %{_datadir}/gnome-vpn-properties
 
 %files -n libnm-gtk
-%defattr(-,root,root,0755)
 %{_libdir}/libnm-gtk.so.*
 %{_libdir}/girepository-1.0/NMGtk-1.0.typelib
 
 %files -n libnm-gtk-devel
-%defattr(-,root,root,0755)
 %dir %{_includedir}/libnm-gtk
 %{_includedir}/libnm-gtk/*.h
 %{_libdir}/pkgconfig/libnm-gtk.pc
@@ -212,12 +209,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
 
 %files -n libnma
-%defattr(-,root,root,0755)
 %{_libdir}/libnma.so.*
 %{_libdir}/girepository-1.0/NMA-1.0.typelib
 
 %files -n libnma-devel
-%defattr(-,root,root,0755)
 %dir %{_includedir}/libnma
 %{_includedir}/libnma/*.h
 %{_libdir}/pkgconfig/libnma.pc
