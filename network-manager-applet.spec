@@ -1,18 +1,18 @@
-%global gtk3_version    3.0.1
-%global glib2_version   2.32.0
+%global gtk3_version    %(pkg-config --modversion gtk+-3.0 2>/dev/null || echo bad)
+%global glib2_version   %(pkg-config --modversion glib-2.0 2>/dev/null || echo bad)
 %global nm_version      1:1.1.0
 %global obsoletes_ver   1:0.9.7
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
-Version: 1.4.6
-Release: 1%{?dist}
+Version: 1.8.0
+Release: 0.1%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
 Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
-Source: https://download.gnome.org/sources/network-manager-applet/1.4/%{name}-%{version}.tar.xz
+Source: https://download.gnome.org/sources/network-manager-applet/1.7/%{name}-1.7.1.tar.xz
 Patch0: nm-applet-no-notifications.patch
 
 Requires: NetworkManager >= %{nm_version}
@@ -25,8 +25,8 @@ BuildRequires: NetworkManager-devel >= %{nm_version}
 BuildRequires: NetworkManager-glib-devel >= %{nm_version}
 BuildRequires: NetworkManager-libnm-devel >= %{nm_version}
 BuildRequires: ModemManager-glib-devel >= 1.0
-BuildRequires: glib2-devel >= %{glib2_version}
-BuildRequires: gtk3-devel >= %{gtk3_version}
+BuildRequires: glib2-devel >= 2.32
+BuildRequires: gtk3-devel >= 3.10
 BuildRequires: libsecret-devel
 BuildRequires: gobject-introspection-devel >= 0.10.3
 BuildRequires: gettext-devel
@@ -39,6 +39,8 @@ BuildRequires: iso-codes-devel
 BuildRequires: libgudev1-devel >= 147
 BuildRequires: libsecret-devel >= 0.12
 BuildRequires: jansson-devel
+BuildRequires: gcr-devel
+BuildRequires: libselinux-devel
 
 %description
 This package contains a network control and status notification area applet
@@ -110,13 +112,15 @@ nm-applet, nm-connection-editor, and the GNOME control center.
 This package deprecates libnm-gtk.
 
 %prep
-%setup -q
+%setup -q -n network-manager-applet-1.7.1
 %patch0 -p1
 
 %build
 autoreconf -i -f
 intltoolize --force
 %configure \
+    --with-gcr \
+    --with-selinux \
     --disable-static \
     --enable-more-warnings=yes
 make %{?_smp_mflags}
@@ -222,6 +226,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 
 
 %changelog
+* Fri Mar 24 2017 Lubomir Rintel <lkundrak@v3.sk> - 1.8.0-0.1
+- Update to a snapshot of network-manager-applet 1.8 release
+
 * Mon Mar 06 2017 Lubomir Rintel <lkundrak@v3.sk> - 1.4.6-1
 - Update to network-manager-applet 1.4.6 release
 
