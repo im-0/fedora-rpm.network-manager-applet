@@ -139,6 +139,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_sysconfdir}/xdg/autostart/nm-applet.desk
 desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-editor.desktop
 
 
+%post	-n libnma -p /sbin/ldconfig
+%postun	-n libnma -p /sbin/ldconfig
+
 %post	-n libnm-gtk -p /sbin/ldconfig
 %postun	-n libnm-gtk -p /sbin/ldconfig
 
