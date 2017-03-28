@@ -188,7 +188,7 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_datadir}/GConf/gsettings/nm-applet.convert
 %{_sysconfdir}/xdg/autostart/nm-applet.desktop
 %{_mandir}/man1/nm-applet*
-%doc NEWS AUTHORS README CONTRIBUTING
+%doc NEWS CONTRIBUTING
 %license COPYING
 
 # Yes, lang files for the applet go in nm-connection-editor RPM since it
