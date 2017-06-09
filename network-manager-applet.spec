@@ -5,7 +5,7 @@
 
 %global rpm_version 1.8.0
 %global real_version 1.8.0
-%global release_version 1
+%global release_version 2
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
