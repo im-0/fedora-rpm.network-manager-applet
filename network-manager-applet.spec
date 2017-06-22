@@ -5,7 +5,7 @@
 
 %global rpm_version 1.8.2
 %global real_version 1.8.2
-%global release_version 1
+%global release_version 2
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
@@ -18,6 +18,8 @@ Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
 Source: https://download.gnome.org/sources/network-manager-applet/1.8/%{name}-%{real_version}.tar.xz
 Patch0: nm-applet-no-notifications.patch
+Patch1: 0001-wireless-security-acually-save-the-PKCS-11-PINs-for-.patch
+Patch2: 0002-wireless-security-fix-some-crash-issues-on-connectio.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: NetworkManager-glib >= %{nm_version}
@@ -118,6 +120,8 @@ This package deprecates libnm-gtk.
 %prep
 %setup -q -n "%{name}-%{real_version}"
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 autoreconf -i -f
@@ -233,6 +237,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 
 
 %changelog
+* Thu Jun 22 2017 Lubomir Rintel <lkundrak@v3.sk> - 1.8.2-2
+- editor: fix a crash on connection save
+
 * Tue Jun 13 2017 Lubomir Rintel <lkundrak@v3.sk> - 1.8.2-1
 - Update to network-manager-applet 1.8.2 release
 
