@@ -1,0 +1,53 @@
+From ecaf0b448fb4bb9c224679df8c64caef6714cef5 Mon Sep 17 00:00:00 2001
+From: Beniamino Galvani <bgalvani@redhat.com>
+Date: Tue, 18 Jul 2017 10:53:02 +0200
+Subject: [PATCH 1/1] libnma: don't return empty passwords from certificate
+ chooser
+
+Return NULL if the user did not specify any password. Setting an empty
+password in the connection when it's not needed (e.g. for CA and
+client certificate) makes the connection invalid.
+
+Fixes: cfb753f6c907aa443307e48fb21eae0b2755bf22
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1469852
+(cherry picked from commit f78c1fe9e528a7cf2edd430a559e2fe5fd5525a7)
+---
+ src/libnma/nma-pkcs11-cert-chooser.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/src/libnma/nma-pkcs11-cert-chooser.c b/src/libnma/nma-pkcs11-cert-chooser.c
+index 852be2e1..1c033e93 100644
+--- a/src/libnma/nma-pkcs11-cert-chooser.c
++++ b/src/libnma/nma-pkcs11-cert-chooser.c
+@@ -48,9 +48,12 @@ static const gchar *
+ get_key_password (NMACertChooser *cert_chooser)
+ {
+ 	NMAPkcs11CertChooserPrivate *priv = NMA_PKCS11_CERT_CHOOSER_GET_PRIVATE (cert_chooser);
++	const gchar *text;
+ 
+ 	g_return_val_if_fail (priv->key_password != NULL, NULL);
+-	return gtk_entry_get_text (GTK_ENTRY (priv->key_password));
++	text = gtk_entry_get_text (GTK_ENTRY (priv->key_password));
++
++	return text && text[0] ? text : NULL;
+ }
+ 
+ static void
+@@ -87,9 +90,12 @@ static const gchar *
+ get_cert_password (NMACertChooser *cert_chooser)
+ {
+ 	NMAPkcs11CertChooserPrivate *priv = NMA_PKCS11_CERT_CHOOSER_GET_PRIVATE (cert_chooser);
++	const gchar *text;
+ 
+ 	g_return_val_if_fail (priv->cert_password != NULL, NULL);
+-	return gtk_entry_get_text (GTK_ENTRY (priv->cert_password));
++	text = gtk_entry_get_text (GTK_ENTRY (priv->cert_password));
++
++	return text && text[0] ? text : NULL;
+ }
+ 
+ static void
+-- 
+2.13.5
+
