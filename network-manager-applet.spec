@@ -5,7 +5,7 @@
 
 %global rpm_version 1.8.2
 %global real_version 1.8.2
-%global release_version 3
+%global release_version 4
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
@@ -21,6 +21,7 @@ Patch0: nm-applet-no-notifications.patch
 Patch1: 0001-wireless-security-acually-save-the-PKCS-11-PINs-for-.patch
 Patch2: 0002-wireless-security-fix-some-crash-issues-on-connectio.patch
 Patch3: 0003-libnma-empty-certificate-fix-rh1469852.patch
+Patch4: 0004-applet-fix-status-icon-VPN-rh1471510.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: NetworkManager-glib >= %{nm_version}
@@ -124,6 +125,7 @@ This package deprecates libnm-gtk.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 autoreconf -i -f
@@ -239,6 +241,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 
 
 %changelog
+* Mon Sep 18 2017 Beniamino Galvani <bgalvani@redhat.com> - 1.8.2-4
+- applet: fix status icon when a VPN has the default route (rh#1471510)
+
 * Wed Aug 23 2017 Thomas Haller <thaller@redhat.com> - 1.8.2-3
 - libnma: fix certificate picker for empty certificates (rh#1469852)
 
