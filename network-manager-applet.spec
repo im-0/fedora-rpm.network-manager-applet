@@ -3,9 +3,11 @@
 %global nm_version      1:1.1.0
 %global obsoletes_ver   1:0.9.7
 
-%global rpm_version 1.8.2
-%global real_version 1.8.2
-%global release_version 4
+%global rpm_version 1.8.4
+%global real_version 1.8.4
+%global release_version 1
+
+%global real_version_major %(printf '%s' '%{real_version}' | sed -n 's/^\\([1-9][0-9]*\\.[1-9][0-9]*\\)\\.[1-9][0-9]*$/\\1/p')
 
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
@@ -16,12 +18,8 @@ License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
 Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
-Source: https://download.gnome.org/sources/network-manager-applet/1.8/%{name}-%{real_version}.tar.xz
-Patch0: nm-applet-no-notifications.patch
-Patch1: 0001-wireless-security-acually-save-the-PKCS-11-PINs-for-.patch
-Patch2: 0002-wireless-security-fix-some-crash-issues-on-connectio.patch
-Patch3: 0003-libnma-empty-certificate-fix-rh1469852.patch
-Patch4: 0004-applet-fix-status-icon-VPN-rh1471510.patch
+Source: https://download.gnome.org/sources/network-manager-applet/%{real_version_major}/%{name}-%{real_version}.tar.xz
+Patch1: 0001-nm-applet-no-notifications.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: NetworkManager-glib >= %{nm_version}
@@ -121,11 +119,7 @@ This package deprecates libnm-gtk.
 
 %prep
 %setup -q -n "%{name}-%{real_version}"
-%patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 %build
 autoreconf -i -f
@@ -241,6 +235,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 
 
 %changelog
+* Wed Sep 20 2017 Thomas Haller <thaller@redhat.com> - 1.8.4-1
+- Update to 1.8.4 release
+
 * Mon Sep 18 2017 Beniamino Galvani <bgalvani@redhat.com> - 1.8.2-4
 - applet: fix status icon when a VPN has the default route (rh#1471510)
 
