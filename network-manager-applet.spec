@@ -3,8 +3,8 @@
 %global nm_version      1:1.1.0
 %global obsoletes_ver   1:0.9.7
 
-%global rpm_version 1.8.4
-%global real_version 1.8.4
+%global rpm_version 1.8.6
+%global real_version 1.8.6
 %global release_version 1
 
 %global real_version_major %(printf '%s' '%{real_version}' | sed -n 's/^\\([1-9][0-9]*\\.[1-9][0-9]*\\)\\.[1-9][0-9]*$/\\1/p')
@@ -39,7 +39,9 @@ BuildRequires: gettext-devel
 BuildRequires: /usr/bin/autopoint
 BuildRequires: pkgconfig
 BuildRequires: libnotify-devel >= 0.4
-BuildRequires: automake autoconf intltool libtool
+BuildRequires: meson
+BuildRequires: intltool
+BuildRequires: gtk-doc
 BuildRequires: desktop-file-utils
 BuildRequires: iso-codes-devel
 BuildRequires: libgudev1-devel >= 147
@@ -122,17 +124,15 @@ This package deprecates libnm-gtk.
 %patch1 -p1
 
 %build
-autoreconf -i -f
-intltoolize --force
-%configure \
-    --with-gcr \
-    --with-selinux \
-    --disable-static \
-    --enable-more-warnings=yes
-make %{?_smp_mflags}
+%meson \
+    -Dwith-gcr=true \
+    -Dwith-selinux=true \
+    -Ddisable-static=true \
+    -Denable-more-warnings=yes
+%meson_build
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%meson_install
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/gnome-vpn-properties
 
 %find_lang nm-applet
@@ -144,6 +144,8 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 desktop-file-validate $RPM_BUILD_ROOT%{_sysconfdir}/xdg/autostart/nm-applet.desktop
 desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-editor.desktop
 
+%check
+%meson_test
 
 %post	-n libnma -p /sbin/ldconfig
 %postun	-n libnma -p /sbin/ldconfig
@@ -235,6 +237,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 
 
 %changelog
+* Tue Nov 07 2017 Lubomir Rintel <lkundrak@v3.sk> - 1.8.6-1
+- Update to 1.8.6 release
+- Switch to Meson build system
+
 * Wed Sep 20 2017 Thomas Haller <thaller@redhat.com> - 1.8.4-1
 - Update to 1.8.4 release
 
