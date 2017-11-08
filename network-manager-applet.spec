@@ -20,6 +20,8 @@ Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
 Source: https://download.gnome.org/sources/network-manager-applet/%{real_version_major}/%{name}-%{real_version}.tar.xz
 Patch1: 0001-nm-applet-no-notifications.patch
+Patch2: 0001-meson-belatedly-bump-the-version.patch
+Patch3: 0002-meson-Make-sure-the-entire-wireless-security-static-.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: NetworkManager-glib >= %{nm_version}
@@ -122,6 +124,8 @@ This package deprecates libnm-gtk.
 %prep
 %setup -q -n "%{name}-%{real_version}"
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %meson \
@@ -137,8 +141,6 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/gnome-vpn-properties
 
 %find_lang nm-applet
 cat nm-applet.lang >> %{name}.lang
-
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
 # validate .desktop and autostart files
 desktop-file-validate $RPM_BUILD_ROOT%{_sysconfdir}/xdg/autostart/nm-applet.desktop
@@ -237,6 +239,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 
 
 %changelog
+* Wed Nov 08 2017 Lubomir Rintel <lkundrak@v3.sk> - 1.8.6-2
+- Meson build fixups
+
 * Tue Nov 07 2017 Lubomir Rintel <lkundrak@v3.sk> - 1.8.6-1
 - Update to 1.8.6 release
 - Switch to Meson build system
