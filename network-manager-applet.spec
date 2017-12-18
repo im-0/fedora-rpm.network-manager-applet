@@ -3,9 +3,9 @@
 %global nm_version      1:1.1.0
 %global obsoletes_ver   1:0.9.7
 
-%global rpm_version 1.8.6
-%global real_version 1.8.6
-%global release_version 3
+%global rpm_version 1.8.8
+%global real_version 1.8.8
+%global release_version 1
 
 %global real_version_major %(printf '%s' '%{real_version}' | sed -n 's/^\\([1-9][0-9]*\\.[1-9][0-9]*\\)\\.[1-9][0-9]*$/\\1/p')
 
@@ -20,9 +20,6 @@ Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
 Source: https://download.gnome.org/sources/network-manager-applet/%{real_version_major}/%{name}-%{real_version}.tar.xz
 Patch1: 0001-nm-applet-no-notifications.patch
-Patch2: 0001-meson-belatedly-bump-the-version.patch
-Patch3: 0002-meson-Make-sure-the-entire-wireless-security-static-.patch
-Patch4: 0001-build-meson-fix-typo-in-generation-of-libnm-gtk.pc.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: NetworkManager-glib >= %{nm_version}
@@ -125,9 +122,6 @@ This package deprecates libnm-gtk.
 %prep
 %setup -q -n "%{name}-%{real_version}"
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 %build
 %meson \
@@ -241,6 +235,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 
 
 %changelog
+* Mon Dec 18 2017 Lubomir Rintel <lkundrak@v3.sk> - 1.8.8-1
+- Update to 1.8.8 release
+
 * Mon Nov 13 2017 Kalev Lember <klember@redhat.com> - 1.8.6-3
 - Backport an upstream patch to fix generated .pc file
 
