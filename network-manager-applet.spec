@@ -3,8 +3,8 @@
 %global nm_version      1:1.1.0
 %global obsoletes_ver   1:0.9.7
 
-%global rpm_version 1.8.8
-%global real_version 1.8.8
+%global rpm_version 1.8.10
+%global real_version 1.8.10
 %global release_version 1
 
 %global real_version_major %(printf '%s' '%{real_version}' | sed -n 's/^\\([1-9][0-9]*\\.[1-9][0-9]*\\)\\.[1-9][0-9]*$/\\1/p')
@@ -125,10 +125,9 @@ This package deprecates libnm-gtk.
 
 %build
 %meson \
-    -Dwith-gcr=true \
-    -Dwith-selinux=true \
-    -Ddisable-static=true \
-    -Denable-more-warnings=yes
+    -Dgcr=true \
+    -Dselinux=true \
+    -Ddisable-static=true
 %meson_build
 
 %install
@@ -235,6 +234,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 
 
 %changelog
+* Tue Dec 19 2017 Lubomir Rintel <lkundrak@v3.sk> - 1.8.10-1
+- Update to 1.8.10 release
+
 * Mon Dec 18 2017 Lubomir Rintel <lkundrak@v3.sk> - 1.8.8-1
 - Update to 1.8.8 release
 
