@@ -9,6 +9,12 @@
 
 %global real_version_major %(printf '%s' '%{real_version}' | sed -n 's/^\\([1-9][0-9]*\\.[1-9][0-9]*\\)\\.[1-9][0-9]*$/\\1/p')
 
+%if 0%{?fedora} > 28 || 0%{?rhel} > 7
+%bcond_with libnm_gtk
+%else
+%bcond_without libnm_gtk
+%endif
+
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: %{rpm_version}
@@ -22,13 +28,13 @@ Source: https://download.gnome.org/sources/network-manager-applet/%{real_version
 Patch1: 0001-nm-applet-no-notifications.patch
 
 Requires: NetworkManager >= %{nm_version}
-Requires: NetworkManager-glib >= %{nm_version}
-Requires: libnma%{?_isa} = %{version}-%{release}
 Requires: libnotify >= 0.4.3
 Requires: nm-connection-editor = %{version}-%{release}
 
+%if %{with libnm_gtk}
 BuildRequires: NetworkManager-devel >= %{nm_version}
 BuildRequires: NetworkManager-glib-devel >= %{nm_version}
+%endif
 BuildRequires: NetworkManager-libnm-devel >= %{nm_version}
 BuildRequires: ModemManager-glib-devel >= 1.0
 BuildRequires: glib2-devel >= 2.32
@@ -56,8 +62,6 @@ for use with NetworkManager.
 
 %package -n nm-connection-editor
 Summary: A network connection configuration editor for NetworkManager
-Requires: NetworkManager-glib >= %{nm_version}
-Requires: libnma%{?_isa} = %{version}-%{release}
 
 %description -n nm-connection-editor
 This package contains a network configuration editor and Bluetooth modem
@@ -127,7 +131,12 @@ This package deprecates libnm-gtk.
 %meson \
     -Dgcr=true \
     -Dselinux=true \
-    -Ddisable-static=true
+    -Ddisable-static=true \
+%if %{with libnm_gtk}
+    -Dlibnm_gtk=true
+%else
+    -Dlibnm_gtk=false
+%endif
 %meson_build
 
 %install
@@ -209,16 +218,20 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 %{_mandir}/man1/nm-connection-editor*
 %dir %{_datadir}/gnome-vpn-properties
 
+%if %{with libnm_gtk}
 %files -n libnm-gtk
 %{_libdir}/libnm-gtk.so.*
 %{_libdir}/girepository-1.0/NMGtk-1.0.typelib
+%endif
 
+%if %{with libnm_gtk}
 %files -n libnm-gtk-devel
 %dir %{_includedir}/libnm-gtk
 %{_includedir}/libnm-gtk/*.h
 %{_libdir}/pkgconfig/libnm-gtk.pc
 %{_libdir}/libnm-gtk.so
 %{_datadir}/gir-1.0/NMGtk-1.0.gir
+%endif
 
 %files -n libnma
 %{_libdir}/libnma.so.*
