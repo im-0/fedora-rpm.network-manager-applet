@@ -18,7 +18,7 @@
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: %{rpm_version}
-Release: %{release_version}%{?dist}
+Release: %{release_version}%{?dist}.1
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -159,34 +159,6 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-edit
 %post	-n libnm-gtk -p /sbin/ldconfig
 %postun	-n libnm-gtk -p /sbin/ldconfig
 
-%post
-touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
-
-%postun
-if [ $1 -eq 0 ] ; then
-    touch --no-create %{_datadir}/icons/hicolor &>/dev/null
-    gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-fi
-
-%posttrans
-gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-
-
-%post -n nm-connection-editor
-touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
-glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
-
-%postun -n nm-connection-editor
-if [ $1 -eq 0 ] ; then
-    touch --no-create %{_datadir}/icons/hicolor &>/dev/null
-    gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-fi
-glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
-
-%posttrans -n nm-connection-editor
-gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
-
 %files
 %{_bindir}/nm-applet
 %{_datadir}/applications/nm-applet.desktop
@@ -247,6 +219,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &>/dev/null || :
 
 
 %changelog
+* Thu Jan 18 2018 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1.8.10-1.1
+- Remove obsolete scriptlets
+
 * Tue Dec 19 2017 Lubomir Rintel <lkundrak@v3.sk> - 1.8.10-1
 - Update to 1.8.10 release
 
