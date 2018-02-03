@@ -18,7 +18,7 @@
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: %{rpm_version}
-Release: %{release_version}%{?dist}.1
+Release: %{release_version}%{?dist}.2
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -153,11 +153,8 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-edit
 %check
 %meson_test
 
-%post	-n libnma -p /sbin/ldconfig
-%postun	-n libnma -p /sbin/ldconfig
-
-%post	-n libnm-gtk -p /sbin/ldconfig
-%postun	-n libnm-gtk -p /sbin/ldconfig
+%ldconfig_scriptlets -n libnma
+%ldconfig_scriptlets -n libnm-gtk
 
 %files
 %{_bindir}/nm-applet
@@ -219,6 +216,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-edit
 
 
 %changelog
+* Sat Feb 03 2018 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1.8.10-1.2
+- Switch to %%ldconfig_scriptlets
+
 * Thu Jan 18 2018 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1.8.10-1.1
 - Remove obsolete scriptlets
 
