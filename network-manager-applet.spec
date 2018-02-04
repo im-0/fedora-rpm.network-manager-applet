@@ -5,7 +5,7 @@
 
 %global rpm_version 1.8.10
 %global real_version 1.8.10
-%global release_version 1
+%global release_version 2
 
 %global real_version_major %(printf '%s' '%{real_version}' | sed -n 's/^\\([1-9][0-9]*\\.[1-9][0-9]*\\)\\.[1-9][0-9]*$/\\1/p')
 
@@ -18,7 +18,7 @@
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: %{rpm_version}
-Release: %{release_version}%{?dist}.2
+Release: %{release_version}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -26,6 +26,8 @@ Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
 Source: https://download.gnome.org/sources/network-manager-applet/%{real_version_major}/%{name}-%{real_version}.tar.xz
 Patch1: 0001-nm-applet-no-notifications.patch
+Patch2: 0002-fix-vpn-get-data-crash-rh1541565.patch
+Patch3: 0003-fix-cert-chooser-for-no-modules-bgo785674.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: libnotify >= 0.4.3
@@ -126,6 +128,8 @@ This package deprecates libnm-gtk.
 %prep
 %setup -q -n "%{name}-%{real_version}"
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %meson \
@@ -216,6 +220,10 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-edit
 
 
 %changelog
+* Sun Feb  4 2018 Thomas Haller <thaller@redhat.com> - 1.8.10-2
+- fix double-free handling VPN data in nm-applet (rh #1541565)
+- fix certificate chooser for no available modules (bgo #785674)
+
 * Sat Feb 03 2018 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1.8.10-1.2
 - Switch to %%ldconfig_scriptlets
 
