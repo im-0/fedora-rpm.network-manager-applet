@@ -18,7 +18,7 @@
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: %{rpm_version}
-Release: %{release_version}%{?dist}.1
+Release: %{release_version}%{?dist}.2
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -223,6 +223,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-edit
 
 
 %changelog
+* Fri Feb 09 2018 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1.8.10-2.2
+- Escape macros in %%changelog
+
 * Thu Feb 08 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.8.10-2.1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
@@ -471,7 +474,7 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-edit
 - move GSettings schema XML to nm-connection-editor rpm (rh #852792)
 
 * Thu Aug 30 2012 Jiří Klimeš <jklimes@redhat.com> - 0.9.7.0-2.git20120820
-- run glib-compile-schemas in %post scriplet (rh #852792)
+- run glib-compile-schemas in %%post scriplet (rh #852792)
 
 * Tue Aug 21 2012 Dan Winship <danw@redhat.com> - 0.9.7.0-1.git20120820
 - Update to 0.9.7.0 snapshot
