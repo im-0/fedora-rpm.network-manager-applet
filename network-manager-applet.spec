@@ -112,7 +112,6 @@ nm-connection editor, and the GNOME Control Center.
 %package -n libnma-devel
 Summary: Private header files for NetworkManager GUI support
 Group: Development/Libraries
-Requires: NetworkManager-devel >= %{nm_version}
 Requires: NetworkManager-libnm-devel >= %{nm_version}
 Obsoletes: NetworkManager-gtk-devel < %{obsoletes_ver}
 Requires: libnma = %{version}-%{release}
