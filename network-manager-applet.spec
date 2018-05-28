@@ -43,7 +43,6 @@ BuildRequires: NetworkManager-libnm-devel >= %{nm_version}
 BuildRequires: ModemManager-glib-devel >= 1.0
 BuildRequires: glib2-devel >= 2.32
 BuildRequires: gtk3-devel >= 3.10
-BuildRequires: libsecret-devel
 BuildRequires: gobject-introspection-devel >= 0.10.3
 BuildRequires: gettext-devel
 BuildRequires: /usr/bin/autopoint
