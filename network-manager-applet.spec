@@ -5,7 +5,7 @@
 
 %global rpm_version 1.8.12
 %global real_version 1.8.12
-%global release_version 2
+%global release_version 3
 
 %global real_version_major %(printf '%s' '%{real_version}' | sed -n 's/^\\([1-9][0-9]*\\.[1-9][0-9]*\\)\\.[1-9][0-9]*$/\\1/p')
 
@@ -26,6 +26,9 @@ Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
 Source: https://download.gnome.org/sources/network-manager-applet/%{real_version_major}/%{name}-%{real_version}.tar.xz
 Patch1: 0001-nm-applet-no-notifications.patch
+# https://gitlab.gnome.org/GNOME/network-manager-applet/issues/1
+# https://gitlab.gnome.org/GNOME/network-manager-applet/merge_requests/3
+Patch2: 0001-Handle-keep-above-passed-through-to-editor_command_l.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: libnotify >= 0.4.3
@@ -125,6 +128,7 @@ This package deprecates libnm-gtk.
 %prep
 %setup -q -n "%{name}-%{real_version}"
 %patch1 -p1
+%patch2 -p1
 
 %build
 %meson \
@@ -218,7 +222,10 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-edit
 
 
 %changelog
-* Mon May 28 2018 Lubomir Rintel <lkundrak@v3.sk> - 1.8.12-1
+* Fri Jun 01 2018 Adam Williamson <awilliam@redhat.com> - 1.8.12-3
+- Fix GGO #1 (nm-connection-editor --keep-above fails with any other arg)
+
+* Mon May 28 2018 Lubomir Rintel <lkundrak@v3.sk> - 1.8.12-2
 - Update to 1.8.12 release
 
 * Fri Feb 09 2018 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1.8.10-2.2
