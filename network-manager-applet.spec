@@ -5,7 +5,7 @@
 
 %global rpm_version 1.8.12
 %global real_version 1.8.12
-%global release_version 3
+%global release_version 4
 
 %global real_version_major %(printf '%s' '%{real_version}' | sed -n 's/^\\([1-9][0-9]*\\.[1-9][0-9]*\\)\\.[1-9][0-9]*$/\\1/p')
 
@@ -29,6 +29,7 @@ Patch1: 0001-nm-applet-no-notifications.patch
 # https://gitlab.gnome.org/GNOME/network-manager-applet/issues/1
 # https://gitlab.gnome.org/GNOME/network-manager-applet/merge_requests/3
 Patch2: 0001-Handle-keep-above-passed-through-to-editor_command_l.patch
+Patch3: 0002-fix-double-free-rh1585302.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: libnotify >= 0.4.3
@@ -129,6 +130,7 @@ This package deprecates libnm-gtk.
 %setup -q -n "%{name}-%{real_version}"
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %meson \
@@ -222,6 +224,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-edit
 
 
 %changelog
+* Mon Jun  4 2018 Thomas Haller <thaller@redhat.com> - 1.8.12-4
+- applet: fix double-free in ap-menu-item (rh #1585302)
+
 * Fri Jun 01 2018 Adam Williamson <awilliam@redhat.com> - 1.8.12-3
 - Fix GGO #1 (nm-connection-editor --keep-above fails with any other arg)
 
