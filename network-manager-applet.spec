@@ -3,9 +3,9 @@
 %global nm_version      1:1.1.0
 %global obsoletes_ver   1:0.9.7
 
-%global rpm_version 1.8.12
-%global real_version 1.8.12
-%global release_version 4
+%global rpm_version 1.8.14
+%global real_version 1.8.14
+%global release_version 1
 
 %global real_version_major %(printf '%s' '%{real_version}' | sed -n 's/^\\([1-9][0-9]*\\.[1-9][0-9]*\\)\\.[1-9][0-9]*$/\\1/p')
 
@@ -26,10 +26,6 @@ Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
 Source: https://download.gnome.org/sources/network-manager-applet/%{real_version_major}/%{name}-%{real_version}.tar.xz
 Patch1: 0001-nm-applet-no-notifications.patch
-# https://gitlab.gnome.org/GNOME/network-manager-applet/issues/1
-# https://gitlab.gnome.org/GNOME/network-manager-applet/merge_requests/3
-Patch2: 0001-Handle-keep-above-passed-through-to-editor_command_l.patch
-Patch3: 0002-fix-double-free-rh1585302.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: libnotify >= 0.4.3
@@ -128,8 +124,6 @@ This package deprecates libnm-gtk.
 %prep
 %setup -q -n "%{name}-%{real_version}"
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 %meson \
@@ -190,7 +184,7 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-edit
 %{_datadir}/icons/hicolor/*/apps/nm-no-connection.*
 %{_datadir}/icons/hicolor/16x16/apps/nm-vpn-standalone-lock.png
 %{_datadir}/glib-2.0/schemas/org.gnome.nm-applet.gschema.xml
-%{_datadir}/appdata/nm-connection-editor.appdata.xml
+%{_datadir}/metainfo/nm-connection-editor.appdata.xml
 %{_mandir}/man1/nm-connection-editor*
 %dir %{_datadir}/gnome-vpn-properties
 
@@ -223,6 +217,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-edit
 
 
 %changelog
+* Mon Jun 25 2018 Lubomir Rintel <lkundrak@v3.sk> - 1.8.14-1
+- Update to 1.8.14 release
+
 * Mon Jun  4 2018 Thomas Haller <thaller@redhat.com> - 1.8.12-4
 - applet: fix double-free in ap-menu-item (rh #1585302)
 
