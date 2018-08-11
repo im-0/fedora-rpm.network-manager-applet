@@ -3,8 +3,8 @@
 %global nm_version      1:1.1.0
 %global obsoletes_ver   1:0.9.7
 
-%global rpm_version 1.8.14
-%global real_version 1.8.14
+%global rpm_version 1.8.16
+%global real_version 1.8.16
 %global release_version 1
 
 %global real_version_major %(printf '%s' '%{real_version}' | sed -n 's/^\\([1-9][0-9]*\\.[1-9][0-9]*\\)\\.[1-9][0-9]*$/\\1/p')
@@ -18,7 +18,7 @@
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: %{rpm_version}
-Release: %{release_version}%{?dist}.1
+Release: %{release_version}%{?dist}
 Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
@@ -54,6 +54,7 @@ BuildRequires: libsecret-devel >= 0.12
 BuildRequires: jansson-devel
 BuildRequires: gcr-devel
 BuildRequires: libselinux-devel
+BuildRequires: mobile-broadband-provider-info-devel
 
 %description
 This package contains a network control and status notification area applet
@@ -217,6 +218,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-edit
 
 
 %changelog
+* Sat Aug 11 2018 Lubomir Rintel <lkundrak@v3.sk> - 1.8.16-1
+- Update to 1.8.16 release
+
 * Fri Jul 13 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.8.14-1.1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
