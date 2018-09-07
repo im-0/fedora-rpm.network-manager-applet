@@ -3,8 +3,8 @@
 %global nm_version      1:1.1.0
 %global obsoletes_ver   1:0.9.7
 
-%global rpm_version 1.8.16
-%global real_version 1.8.16
+%global rpm_version 1.8.18
+%global real_version 1.8.18
 %global release_version 1
 
 %global real_version_major %(printf '%s' '%{real_version}' | sed -n 's/^\\([1-9][0-9]*\\.[1-9][0-9]*\\)\\.[1-9][0-9]*$/\\1/p')
@@ -218,6 +218,10 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-edit
 
 
 %changelog
+* Fri Sep  7 2018 Thomas Haller <thaller@redhat.com> - 1.8.18-1
+- Update to 1.8.18 release
+- libnma: fix wrongly showing hidden GUI elements (rh #1626397)
+
 * Sat Aug 11 2018 Lubomir Rintel <lkundrak@v3.sk> - 1.8.16-1
 - Update to 1.8.16 release
 
