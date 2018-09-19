@@ -123,8 +123,7 @@ nm-applet, nm-connection-editor, and the GNOME control center.
 This package deprecates libnm-gtk.
 
 %prep
-%setup -q -n "%{name}-%{real_version}"
-%patch1 -p1
+%autosetup -p1 -n "%{name}-%{real_version}"
 
 %build
 %meson \
