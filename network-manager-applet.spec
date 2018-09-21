@@ -26,6 +26,7 @@ Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
 Source: https://download.gnome.org/sources/network-manager-applet/%{real_version_major}/%{name}-%{real_version}.tar.xz
 Patch1: 0001-nm-applet-no-notifications.patch
+Patch2: 0002-no-show-all.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: libnotify >= 0.4.3
@@ -217,6 +218,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-edit
 
 
 %changelog
+* Fri Sep 21 2018 Thomas Haller <thaller@redhat.com> - 1.8.18-2
+- libnma: fix wrongly showing hidden GUI elements (rh #1626397) (2)
+
 * Fri Sep  7 2018 Thomas Haller <thaller@redhat.com> - 1.8.18-1
 - Update to 1.8.18 release
 - libnma: fix wrongly showing hidden GUI elements (rh #1626397)
