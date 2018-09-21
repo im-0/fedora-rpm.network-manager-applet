@@ -5,7 +5,7 @@
 
 %global rpm_version 1.8.18
 %global real_version 1.8.18
-%global release_version 1
+%global release_version 2
 
 %global real_version_major %(printf '%s' '%{real_version}' | sed -n 's/^\\([1-9][0-9]*\\.[1-9][0-9]*\\)\\.[1-9][0-9]*$/\\1/p')
 
