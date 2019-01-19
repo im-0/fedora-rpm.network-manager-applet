@@ -5,7 +5,7 @@
 
 %global rpm_version 1.8.18
 %global real_version 1.8.18
-%global release_version 2
+%global release_version 3
 
 %global real_version_major %(printf '%s' '%{real_version}' | sed -n 's/^\\([1-9][0-9]*\\.[1-9][0-9]*\\)\\.[1-9][0-9]*$/\\1/p')
 
@@ -27,6 +27,7 @@ Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 Source: https://download.gnome.org/sources/network-manager-applet/%{real_version_major}/%{name}-%{real_version}.tar.xz
 Patch1: 0001-nm-applet-no-notifications.patch
 Patch2: 0002-no-show-all.patch
+Patch3: 0003-wifi-dialog-fixes.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: libnotify >= 0.4.3
@@ -218,6 +219,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-edit
 
 
 %changelog
+* Sat Jan 19 2019 Beniamino Galvani <bgalvani@redhat.com> - 1.8.18-3
+- wifi-dialog: fix widget hiding logic (rh #1665653)
+
 * Fri Sep 21 2018 Thomas Haller <thaller@redhat.com> - 1.8.18-2
 - libnma: fix wrongly showing hidden GUI elements (rh #1626397) (2)
 
