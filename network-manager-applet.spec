@@ -153,11 +153,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-edit
 %check
 %meson_test
 
-%post	-n libnma -p /sbin/ldconfig
-%postun	-n libnma -p /sbin/ldconfig
+%ldconfig_scriptlets	-n libnma
 
-%post	-n libnm-gtk -p /sbin/ldconfig
-%postun	-n libnm-gtk -p /sbin/ldconfig
+%ldconfig_scriptlets	-n libnm-gtk
 
 %files
 %{_bindir}/nm-applet
