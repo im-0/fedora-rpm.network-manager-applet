@@ -19,7 +19,6 @@ Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: %{rpm_version}
 Release: %{release_version}%{?dist}
-Group: Applications/System
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
 Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
@@ -72,7 +71,6 @@ utility for use with NetworkManager.
 
 %package -n libnm-gtk
 Summary: Private libraries for NetworkManager GUI support
-Group: Development/Libraries
 Requires: gtk3 >= %{gtk3_version}
 Requires: mobile-broadband-provider-info >= 0.20090602
 Obsoletes: NetworkManager-gtk < %{obsoletes_ver}
@@ -83,7 +81,6 @@ nm-connection editor, and the GNOME Control Center.
 
 %package -n libnm-gtk-devel
 Summary: Private header files for NetworkManager GUI support
-Group: Development/Libraries
 Requires: NetworkManager-devel >= %{nm_version}
 Requires: NetworkManager-glib-devel >= %{nm_version}
 Obsoletes: NetworkManager-gtk-devel < %{obsoletes_ver}
@@ -100,7 +97,6 @@ This package is obsoleted by libnma.
 
 %package -n libnma
 Summary: Private libraries for NetworkManager GUI support
-Group: Development/Libraries
 Requires: gtk3 >= %{gtk3_version}
 Requires: mobile-broadband-provider-info >= 0.20090602
 Obsoletes: NetworkManager-gtk < %{obsoletes_ver}
@@ -111,7 +107,6 @@ nm-connection editor, and the GNOME Control Center.
 
 %package -n libnma-devel
 Summary: Private header files for NetworkManager GUI support
-Group: Development/Libraries
 Requires: NetworkManager-libnm-devel >= %{nm_version}
 Obsoletes: NetworkManager-gtk-devel < %{obsoletes_ver}
 Requires: libnma = %{version}-%{release}
