@@ -1,0 +1,256 @@
+From 7dcc1aebf917cb4d8205376e43ecab15ea089571 Mon Sep 17 00:00:00 2001
+From: Lubomir Rintel <lkundrak@v3.sk>
+Date: Fri, 15 Feb 2019 10:49:37 +0100
+Subject: [PATCH 1/3] nma/pkcs11-cert-chooser: show the password entries when
+ it makes sense
+
+If the PKCS#11 cert chooser was created without the certificate or the
+key (a likely situation), with FLAG_PASSWORDS the password entries would
+be hidden. However, if the set_key/cert() was called subequently, they
+would erroneously remain hidden.
+
+Fixes: 36de028b33be187cc5007b49bf71446662a8fefd
+---
+ src/libnma/nma-pkcs11-cert-chooser.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/src/libnma/nma-pkcs11-cert-chooser.c b/src/libnma/nma-pkcs11-cert-chooser.c
+index bcbe3059..49a45443 100644
+--- a/src/libnma/nma-pkcs11-cert-chooser.c
++++ b/src/libnma/nma-pkcs11-cert-chooser.c
+@@ -65,6 +65,9 @@ set_key_uri (NMACertChooser *cert_chooser, const gchar *uri)
+ 	gtk_widget_set_sensitive (priv->key_button_label, TRUE);
+ 	gtk_widget_set_sensitive (priv->key_password, TRUE);
+ 	gtk_widget_set_sensitive (priv->key_password_label, TRUE);
++	gtk_widget_show (priv->key_password);
++	gtk_widget_show (priv->key_password_label);
++	gtk_widget_show (priv->show_password);
+ 	nma_cert_chooser_button_set_uri (NMA_CERT_CHOOSER_BUTTON (priv->key_button), uri);
+ }
+ 
+@@ -109,6 +112,9 @@ set_cert_uri (NMACertChooser *cert_chooser, const gchar *uri)
+ 	} else if (g_str_has_prefix (uri, NM_SETTING_802_1X_CERT_SCHEME_PREFIX_PKCS11)) {
+ 		gtk_widget_set_sensitive (priv->cert_password, TRUE);
+ 		gtk_widget_set_sensitive (priv->cert_password_label, TRUE);
++		gtk_widget_show (priv->cert_password);
++		gtk_widget_show (priv->cert_password_label);
++		gtk_widget_show (priv->show_password);
+ 	} else {
+ 		g_warning ("The certificate '%s' uses an unknown scheme\n", uri);
+ 		return;
+@@ -410,8 +416,9 @@ set_flags (NMACertChooser *cert_chooser, NMACertChooserFlags flags)
+ 		gtk_widget_hide (priv->key_button);
+ 		gtk_widget_hide (priv->key_button_label);
+ 
+-		/* If these are not sensitive now, the cannot possibly be made
+-		 * sensitive and there's no point in showing them. */
++		/* With FLAG_PASSWORDS the user can't pick a different key or a
++		 * certificate, so there's no point in showing inactive password
++		 * inputs. */
+ 		if (!gtk_widget_get_sensitive (priv->cert_password)) {
+ 			gtk_widget_hide (priv->cert_password);
+ 			gtk_widget_hide (priv->cert_password_label);
+-- 
+2.20.1
+
+From bafe99ac179a5e2644f3e3274211212540c95c26 Mon Sep 17 00:00:00 2001
+From: Lubomir Rintel <lkundrak@v3.sk>
+Date: Fri, 15 Feb 2019 11:20:31 +0100
+Subject: [PATCH 2/3] nma/pkcs11-cert-chooser: escape mnemonic in cert/key
+ title
+
+In an unlikely event someone picks a title with an underscore in it,
+like I've just done in a test case.
+---
+ src/libnma/nma-pkcs11-cert-chooser.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/src/libnma/nma-pkcs11-cert-chooser.c b/src/libnma/nma-pkcs11-cert-chooser.c
+index 49a45443..e3775ed2 100644
+--- a/src/libnma/nma-pkcs11-cert-chooser.c
++++ b/src/libnma/nma-pkcs11-cert-chooser.c
+@@ -371,17 +371,23 @@ static void
+ set_title (NMACertChooser *cert_chooser, const gchar *title)
+ {
+ 	NMAPkcs11CertChooserPrivate *priv = NMA_PKCS11_CERT_CHOOSER_GET_PRIVATE (cert_chooser);
++	gs_free gchar *mnemonic_escaped = NULL;
+ 	gchar *text;
++	char **split;
++
++	split = g_strsplit (title, "_", -1);
++	mnemonic_escaped = g_strjoinv("__", split);
++	g_strfreev (split);
+ 
+ 	text = g_strdup_printf (_("Choose a key for %s Certificate"), title);
+ 	nma_cert_chooser_button_set_title (NMA_CERT_CHOOSER_BUTTON (priv->key_button), text);
+ 	g_free (text);
+ 
+-	text = g_strdup_printf (_("%s private _key"), title);
++	text = g_strdup_printf (_("%s private _key"), mnemonic_escaped);
+ 	gtk_label_set_text_with_mnemonic (GTK_LABEL (priv->key_button_label), text);
+ 	g_free (text);
+ 
+-	text = g_strdup_printf (_("%s key _password"), title);
++	text = g_strdup_printf (_("%s key _password"), mnemonic_escaped);
+ 	gtk_label_set_text_with_mnemonic (GTK_LABEL (priv->key_password_label), text);
+ 	g_free (text);
+ 
+@@ -389,11 +395,11 @@ set_title (NMACertChooser *cert_chooser, const gchar *title)
+ 	nma_cert_chooser_button_set_title (NMA_CERT_CHOOSER_BUTTON (priv->cert_button), text);
+ 	g_free (text);
+ 
+-	text = g_strdup_printf (_("%s _certificate"), title);
++	text = g_strdup_printf (_("%s _certificate"), mnemonic_escaped);
+ 	gtk_label_set_text_with_mnemonic (GTK_LABEL (priv->cert_button_label), text);
+ 	g_free (text);
+ 
+-	text = g_strdup_printf (_("%s certificate _password"), title);
++	text = g_strdup_printf (_("%s certificate _password"), mnemonic_escaped);
+ 	gtk_label_set_text_with_mnemonic (GTK_LABEL (priv->cert_password_label), text);
+ 	g_free (text);
+ }
+-- 
+2.20.1
+
+From 92ff6b2a30529a69e6d28353efc88470f4279880 Mon Sep 17 00:00:00 2001
+From: Lubomir Rintel <lkundrak@v3.sk>
+Date: Fri, 15 Feb 2019 10:13:06 +0100
+Subject: [PATCH 3/3] nma/tests: add certificate chooser test program
+
+---
+ Makefile.am                     | 17 ++++++++
+ src/libnma/tests/cert-chooser.c | 73 +++++++++++++++++++++++++++++++++
+ src/libnma/tests/meson.build    |  9 ++++
+ 3 files changed, 99 insertions(+)
+ create mode 100644 src/libnma/tests/cert-chooser.c
+
+diff --git a/Makefile.am b/Makefile.am
+index 5769b957..46095319 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -696,6 +696,23 @@ src_libnma_tests_run_vpn_LDADD = \
+ 	$(LIBNM_LIBS) \
+ 	src/libnma/libnma.la
+ 
++check_PROGRAMS_norun += src/libnma/tests/cert-chooser
++
++src_libnma_tests_cert_chooser_CPPFLAGS = \
++	$(dflt_cppflags) \
++	$(GLIB_CFLAGS) \
++	$(GTK3_CFLAGS) \
++	$(LIBNM_CFLAGS) \
++	"-I$(srcdir)/shared/" \
++	"-I$(srcdir)/src/libnma" \
++	-Isrc/libnma
++
++src_libnma_tests_cert_chooser_LDADD = \
++	$(GLIB_LIBS) \
++	$(GTK3_LIBS) \
++	$(LIBNM_LIBS) \
++	src/libnma/libnma.la
++
+ EXTRA_DIST += \
+ 	src/libnma/nma-version.h.in \
+ 	src/libnma/libnma.pc.in \
+diff --git a/src/libnma/tests/cert-chooser.c b/src/libnma/tests/cert-chooser.c
+new file mode 100644
+index 00000000..9ba22ded
+--- /dev/null
++++ b/src/libnma/tests/cert-chooser.c
+@@ -0,0 +1,73 @@
++/*
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Library General Public License as
++ * published by the ree Software Foundation; either version 2 of the
++ * License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Library General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License along
++ * with this program; if not, write to the Free Software Foundation, Inc.,
++ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
++ *
++ * Copyright 2019 Red Hat, Inc.
++ */
++
++#include "nm-default.h"
++
++#include <gtk/gtk.h>
++#include "nma-cert-chooser.h"
++
++int
++main (int argc, char *argv[])
++{
++	GtkWidget *dialog;
++	GtkBox *content;
++	GtkWidget *widget;
++
++	gtk_init (&argc, &argv);
++
++	dialog = gtk_dialog_new_with_buttons ("NMACertChooser test",
++	                                      NULL, GTK_DIALOG_MODAL,
++	                                      "Dismiss",  GTK_RESPONSE_DELETE_EVENT,
++	                                      NULL);
++	content = GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog)));
++
++	widget = nma_cert_chooser_new ("Any", 0);
++	gtk_widget_show (widget);
++	gtk_box_pack_start (content, widget, TRUE, TRUE, 6);
++
++	widget = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
++	gtk_widget_show (widget);
++	gtk_box_pack_start (content, widget, TRUE, TRUE, 6);
++
++	widget = nma_cert_chooser_new ("FLAG_PASSWORDS", NMA_CERT_CHOOSER_FLAG_PASSWORDS);
++	nma_cert_chooser_set_cert (NMA_CERT_CHOOSER (widget),
++	                           "pkcs11:object=praise;type=satan",
++	                           NM_SETTING_802_1X_CK_SCHEME_PKCS11);
++	nma_cert_chooser_set_key_uri (NMA_CERT_CHOOSER (widget),
++	                              "pkcs11:object=worship;type=doom");
++	gtk_widget_show (widget);
++	gtk_box_pack_start (content, widget, TRUE, TRUE, 6);
++
++	widget = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
++	gtk_widget_show (widget);
++	gtk_box_pack_start (content, widget, TRUE, TRUE, 6);
++
++	widget = nma_cert_chooser_new ("FLAG_CERT", NMA_CERT_CHOOSER_FLAG_CERT);
++	gtk_widget_show (widget);
++	gtk_box_pack_start (content, widget, TRUE, TRUE, 6);
++
++	widget = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
++	gtk_widget_show (widget);
++	gtk_box_pack_start (content, widget, TRUE, TRUE, 6);
++
++	widget = nma_cert_chooser_new ("FLAG_PEM", NMA_CERT_CHOOSER_FLAG_PEM);
++	gtk_widget_show (widget);
++	gtk_box_pack_start (content, widget, TRUE, TRUE, 6);
++
++	gtk_dialog_run (GTK_DIALOG (dialog));
++}
+diff --git a/src/libnma/tests/meson.build b/src/libnma/tests/meson.build
+index 4ac1543f..2d682e86 100644
+--- a/src/libnma/tests/meson.build
++++ b/src/libnma/tests/meson.build
+@@ -4,6 +4,15 @@ deps = [
+   libnma_dep
+ ]
+ 
++executable(
++  'cert-chooser',
++  'cert-chooser.c',
++  include_directories: incs,
++  dependencies: deps,
++  c_args: cflags,
++  install: false
++)
++
+ executable(
+   'mobile-wizard',
+   'mobile-wizard.c',
+-- 
+2.20.1
+
