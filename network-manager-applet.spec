@@ -3,9 +3,9 @@
 %global nm_version      1:1.1.0
 %global obsoletes_ver   1:0.9.7
 
-%global rpm_version 1.8.20
-%global real_version 1.8.20
-%global release_version 2
+%global rpm_version 1.8.22
+%global real_version 1.8.22
+%global release_version 1
 
 %global real_version_major %(printf '%s' '%{real_version}' | sed -n 's/^\\([1-9][0-9]*\\.[1-9][0-9]*\\)\\.[1-9][0-9]*$/\\1/p')
 
@@ -25,9 +25,6 @@ Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
 Source: https://download.gnome.org/sources/network-manager-applet/%{real_version_major}/%{name}-%{real_version}.tar.xz
 Patch1: 0001-nm-applet-no-notifications.patch
-Patch2: 0002-cert-chooser-fixes.patch
-Patch3: 0003-wifi-dialog-fix-wrong-free.patch
-Patch4: 0004-wireless-security-hints.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: libnotify >= 0.4.3
@@ -213,6 +210,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-edit
 
 
 %changelog
+* Wed May 29 2019 Lubomir Rintel <lkundrak@v3.sk> - 1.8.22-1
+- Update to 1.8.22 release
+
 * Wed Feb 27 2019 Beniamino Galvani <bgalvani@redhat.com> - 1.8.20-2
 - Fix parsing of hints in wifi secret dialog (rh #1679251)
 - Import other upstream fixes after 1.8.20
