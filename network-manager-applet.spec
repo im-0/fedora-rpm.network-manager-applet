@@ -28,7 +28,8 @@ Patch1: 0001-nm-applet-no-notifications.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: libnotify >= 0.4.3
-Requires: nm-connection-editor = %{version}-%{release}
+Requires: nm-connection-editor%{?_isa} = %{version}-%{release}
+Requires: libnma%{?_isa} = %{version}-%{release}
 
 %if %{with libnm_gtk}
 BuildRequires: NetworkManager-devel >= %{nm_version}
@@ -61,6 +62,7 @@ for use with NetworkManager.
 
 %package -n nm-connection-editor
 Summary: A network connection configuration editor for NetworkManager
+Requires: libnma%{?_isa} = %{version}-%{release}
 
 %description -n nm-connection-editor
 This package contains a network configuration editor and Bluetooth modem
