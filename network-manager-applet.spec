@@ -18,7 +18,7 @@
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: %{rpm_version}
-Release: %{release_version}%{?dist}
+Release: %{release_version}%{?dist}.1
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
 Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
@@ -212,6 +212,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-edit
 
 
 %changelog
+* Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.8.22-1.1
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
 * Wed May 29 2019 Lubomir Rintel <lkundrak@v3.sk> - 1.8.22-1
 - Update to 1.8.22 release
 
