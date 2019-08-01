@@ -7,7 +7,7 @@
 
 %global rpm_version 1.16.0
 %global real_version 1.16.0
-%global release_version 1
+%global release_version 2
 
 %global real_version_major %(printf '%s' '%{real_version}' | sed -n 's/^\\([1-9][0-9]*\\.[1-9][0-9]*\\)\\.[1-9][0-9]*$/\\1/p')
 
@@ -56,6 +56,8 @@ BuildRequires: jansson-devel
 BuildRequires: gcr-devel
 BuildRequires: libselinux-devel
 BuildRequires: mobile-broadband-provider-info-devel
+BuildRequires: libappindicator-gtk3-devel
+BuildRequires: libdbusmenu-gtk3-devel
 
 %description
 This package contains a network control and status notification area applet
@@ -77,7 +79,8 @@ utility for use with NetworkManager.
 %meson \
     -Dgcr=true \
     -Dselinux=true \
-    -Ddisable-static=true
+    -Ddisable-static=true \
+    -Dappindicator=yes
 %meson_build
 
 %install
@@ -127,6 +130,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-edit
 
 
 %changelog
+* Thu Apr 30 2020 Ivan Mironov <mironov.ivan@gmail.com> - 1.16.0-2
+- Build with libappindicator which enables Status Notifier Item support
+
 * Sat Mar  7 2020 Thomas Haller <thaller@redhat.com> - 1.16.0-1
 - Update to 1.16.0 release
 - Move libnma to separate, independent project
