@@ -70,17 +70,18 @@ utility for use with NetworkManager.
 
 
 %package -n libnm-gtk
-Summary: Private libraries for NetworkManager GUI support
+Summary: Legacy NetworkManager GUI library
 Requires: gtk3 >= %{gtk3_version}
 Requires: mobile-broadband-provider-info >= 0.20090602
 Obsoletes: NetworkManager-gtk < %{obsoletes_ver}
 
 %description -n libnm-gtk
-This package contains private libraries to be used only by nm-applet,
-nm-connection editor, and the GNOME Control Center.
+This package contains the legacy version of library used for integrating GUI
+tools with NetworkManager.
+
 
 %package -n libnm-gtk-devel
-Summary: Private header files for NetworkManager GUI support
+Summary: Header files for legacy NetworkManager GUI library
 Requires: NetworkManager-devel >= %{nm_version}
 Requires: NetworkManager-glib-devel >= %{nm_version}
 Obsoletes: NetworkManager-gtk-devel < %{obsoletes_ver}
@@ -89,24 +90,23 @@ Requires: gtk3-devel
 Requires: pkgconfig
 
 %description -n libnm-gtk-devel
-This package contains private header and pkg-config files to be used only by
-GNOME control center.
-
-This package is obsoleted by libnma.
+This package contains legacy version of header and pkg-config files to be
+used for integrating GUI tools with NetworkManager.
 
 
 %package -n libnma
-Summary: Private libraries for NetworkManager GUI support
+Summary: NetworkManager GUI library
 Requires: gtk3 >= %{gtk3_version}
 Requires: mobile-broadband-provider-info >= 0.20090602
 Obsoletes: NetworkManager-gtk < %{obsoletes_ver}
 
 %description -n libnma
-This package contains private libraries to be used only by nm-applet,
-nm-connection editor, and the GNOME Control Center.
+This package contains the library used for integrating GUI tools with
+NetworkManager.
+
 
 %package -n libnma-devel
-Summary: Private header files for NetworkManager GUI support
+Summary: Header files for NetworkManager GUI library
 Requires: NetworkManager-libnm-devel >= %{nm_version}
 Obsoletes: NetworkManager-gtk-devel < %{obsoletes_ver}
 Requires: libnma = %{version}-%{release}
@@ -114,10 +114,9 @@ Requires: gtk3-devel
 Requires: pkgconfig
 
 %description -n libnma-devel
-This package contains private header and pkg-config files to be used only by
-nm-applet, nm-connection-editor, and the GNOME control center.
+This package contains header and pkg-config files to be used for integrating
+GUI tools with NetworkManager.
 
-This package deprecates libnm-gtk.
 
 %prep
 %autosetup -p1 -n "%{name}-%{real_version}"
