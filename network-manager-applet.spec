@@ -1,6 +1,6 @@
 %global gtk3_version    %(pkg-config --modversion gtk+-3.0 2>/dev/null || echo bad)
 %global glib2_version   %(pkg-config --modversion glib-2.0 2>/dev/null || echo bad)
-%global nm_version      1:1.1.0
+%global nm_version      1:1.8.0
 %global obsoletes_ver   1:0.9.7
 
 %global rpm_version 1.8.22
