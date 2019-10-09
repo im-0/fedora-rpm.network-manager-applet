@@ -1,0 +1,28 @@
+From 397dc79e58ab50ca2ca3d49bc600eb05028f3927 Mon Sep 17 00:00:00 2001
+From: Lubomir Rintel <lkundrak@v3.sk>
+Date: Wed, 9 Oct 2019 16:26:51 +0200
+Subject: [PATCH 1/2] appdata: add OARS rating
+
+There's no content that would be ranked objectionable by OARS unless you're
+the sort of person that likes to put nudity, religious violence and
+adultery into your connections. That's none of our business though.
+
+The new version of appdata-util insists on this tag being around.
+---
+ nm-connection-editor.appdata.xml.in | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/nm-connection-editor.appdata.xml.in b/nm-connection-editor.appdata.xml.in
+index 6d30bf14..5f06de01 100644
+--- a/nm-connection-editor.appdata.xml.in
++++ b/nm-connection-editor.appdata.xml.in
+@@ -25,4 +25,6 @@
+   <update_contact>networkmanager-maint@gnome.bugs</update_contact>
+   <translation type="gettext">nm-applet</translation>
+   <developer_name>The NetworkManager Developers</developer_name>
++
++  <content_rating type="oars-1.0" />
+ </component>
+-- 
+2.23.0
+
