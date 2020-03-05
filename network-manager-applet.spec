@@ -1,20 +1,15 @@
 %global gtk3_version    %(pkg-config --modversion gtk+-3.0 2>/dev/null || echo bad)
 %global gtk4_version    %(pkg-config --modversion gtk4 2>/dev/null || echo bad)
 %global glib2_version   %(pkg-config --modversion glib-2.0 2>/dev/null || echo bad)
-%global nm_version      1:1.8.0
+%global nm_version      1:1.16.0
+%global libnma_version  1.8.27
 %global obsoletes_ver   1:0.9.7
 
-%global rpm_version 1.8.24
-%global real_version 1.8.24
+%global rpm_version 1.16.0
+%global real_version 1.16.0
 %global release_version 1
 
 %global real_version_major %(printf '%s' '%{real_version}' | sed -n 's/^\\([1-9][0-9]*\\.[1-9][0-9]*\\)\\.[1-9][0-9]*$/\\1/p')
-
-%if 0%{?fedora} > 28 || 0%{?rhel} > 7
-%bcond_with libnm_gtk
-%else
-%bcond_without libnm_gtk
-%endif
 
 %if 0%{?fedora} > 31 || 0%{?rhel} > 8
 %bcond_with libnma_gtk4
@@ -25,28 +20,20 @@
 Name: network-manager-applet
 Summary: A network control and status applet for NetworkManager
 Version: %{rpm_version}
-Release: %{release_version}%{?dist}.1
+Release: %{release_version}%{?dist}
 License: GPLv2+
 URL: http://www.gnome.org/projects/NetworkManager/
 Obsoletes: NetworkManager-gnome < %{obsoletes_ver}
 
 Source: https://download.gnome.org/sources/network-manager-applet/%{real_version_major}/%{name}-%{real_version}.tar.xz
-Patch1: 0001-nm-applet-no-notifications.patch
-
-# https://gitlab.gnome.org/GNOME/network-manager-applet/merge_requests/67
-Patch2: 0001-appdata-add-OARS-rating.patch
-Patch3: 0002-appdata-add-release-tag.patch
 
 Requires: NetworkManager >= %{nm_version}
 Requires: libnotify >= 0.4.3
 Requires: nm-connection-editor%{?_isa} = %{version}-%{release}
-Requires: libnma%{?_isa} = %{version}-%{release}
+Requires: libnma%{?_isa} >= %{libnma_version}
 
-%if %{with libnm_gtk}
-BuildRequires: NetworkManager-devel >= %{nm_version}
-BuildRequires: NetworkManager-glib-devel >= %{nm_version}
-%endif
 BuildRequires: NetworkManager-libnm-devel >= %{nm_version}
+BuildRequires: libnma >= %{libnma_version}
 BuildRequires: ModemManager-glib-devel >= 1.0
 BuildRequires: glib2-devel >= 2.32
 BuildRequires: gtk3-devel >= 3.10
@@ -76,83 +63,11 @@ for use with NetworkManager.
 
 %package -n nm-connection-editor
 Summary: A network connection configuration editor for NetworkManager
-Requires: libnma%{?_isa} = %{version}-%{release}
+Requires: libnma%{?_isa} >= %{libnma_version}
 
 %description -n nm-connection-editor
 This package contains a network configuration editor and Bluetooth modem
 utility for use with NetworkManager.
-
-
-%package -n libnm-gtk
-Summary: Legacy NetworkManager GUI library
-Requires: gtk3 >= %{gtk3_version}
-Requires: mobile-broadband-provider-info >= 0.20090602
-Obsoletes: NetworkManager-gtk < %{obsoletes_ver}
-
-%description -n libnm-gtk
-This package contains the legacy version of library used for integrating GUI
-tools with NetworkManager.
-
-
-%package -n libnm-gtk-devel
-Summary: Header files for legacy NetworkManager GUI library
-Requires: NetworkManager-devel >= %{nm_version}
-Requires: NetworkManager-glib-devel >= %{nm_version}
-Obsoletes: NetworkManager-gtk-devel < %{obsoletes_ver}
-Requires: libnm-gtk = %{version}-%{release}
-Requires: gtk3-devel
-Requires: pkgconfig
-
-%description -n libnm-gtk-devel
-This package contains legacy version of header and pkg-config files to be
-used for integrating GUI tools with NetworkManager.
-
-
-%package -n libnma
-Summary: NetworkManager GUI library
-Requires: gtk3 >= %{gtk3_version}
-Requires: mobile-broadband-provider-info >= 0.20090602
-Obsoletes: NetworkManager-gtk < %{obsoletes_ver}
-
-%description -n libnma
-This package contains the library used for integrating GUI tools with
-NetworkManager.
-
-
-%package -n libnma-devel
-Summary: Header files for NetworkManager GUI library
-Requires: NetworkManager-libnm-devel >= %{nm_version}
-Obsoletes: NetworkManager-gtk-devel < %{obsoletes_ver}
-Requires: libnma = %{version}-%{release}
-Requires: gtk3-devel
-Requires: pkgconfig
-
-%description -n libnma-devel
-This package contains header and pkg-config files to be used for integrating
-GUI tools with NetworkManager.
-
-
-%package -n libnma-gtk4
-Summary: Experimental GTK 4 version of NetworkManager GUI library
-Requires: gtk4 >= %{gtk4_version}
-Requires: mobile-broadband-provider-info >= 0.20090602
-
-%description -n libnma-gtk4
-This package contains the experimental GTK4 version of library used for
-integrating GUI tools with NetworkManager.
-
-
-%package -n libnma-gtk4-devel
-Summary: Header files for exerimental GTK4 version of NetworkManager GUI library
-Requires: NetworkManager-libnm-devel >= %{nm_version}
-Obsoletes: NetworkManager-gtk-devel < %{obsoletes_ver}
-Requires: libnma = %{version}-%{release}
-Requires: gtk3-devel
-Requires: pkgconfig
-
-%description -n libnma-gtk4-devel
-This package contains the experimental GTK4 version of header and pkg-config
-files to be used for integrating GUI tools with NetworkManager.
 
 
 %prep
@@ -162,17 +77,7 @@ files to be used for integrating GUI tools with NetworkManager.
 %meson \
     -Dgcr=true \
     -Dselinux=true \
-    -Ddisable-static=true \
-%if %{with libnma_gtk4}
-    -Dlibnma_gtk4=true \
-%else
-    -Dlibnma_gtk4=false \
-%endif
-%if %{with libnm_gtk}
-    -Dlibnm_gtk=true
-%else
-    -Dlibnm_gtk=false
-%endif
+    -Ddisable-static=true
 %meson_build
 
 %install
@@ -188,12 +93,6 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-edit
 
 %check
 %meson_test
-
-%ldconfig_scriptlets -n libnma
-
-%ldconfig_scriptlets -n libnm-gtk
-
-%ldconfig_scriptlets -n libnma-gtk4
 
 
 %files
@@ -222,55 +121,17 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/nm-connection-edit
 %{_datadir}/icons/hicolor/*/apps/nm-device-*.*
 %{_datadir}/icons/hicolor/*/apps/nm-no-connection.*
 %{_datadir}/icons/hicolor/16x16/apps/nm-vpn-standalone-lock.png
-%{_datadir}/glib-2.0/schemas/org.gnome.nm-applet.gschema.xml
 %{_datadir}/metainfo/nm-connection-editor.appdata.xml
 %{_mandir}/man1/nm-connection-editor*
 %dir %{_datadir}/gnome-vpn-properties
 
 
-%if %{with libnm_gtk}
-%files -n libnm-gtk
-%{_libdir}/libnm-gtk.so.*
-%{_libdir}/girepository-1.0/NMGtk-1.0.typelib
-
-
-%files -n libnm-gtk-devel
-%dir %{_includedir}/libnm-gtk
-%{_includedir}/libnm-gtk/*.h
-%{_libdir}/pkgconfig/libnm-gtk.pc
-%{_libdir}/libnm-gtk.so
-%{_datadir}/gir-1.0/NMGtk-1.0.gir
-%endif
-
-
-%files -n libnma
-%{_libdir}/libnma.so.*
-%{_libdir}/girepository-1.0/NMA-1.0.typelib
-
-
-%files -n libnma-devel
-%{_includedir}/libnma
-%{_libdir}/pkgconfig/libnma.pc
-%{_libdir}/libnma.so
-%{_datadir}/gir-1.0/NMA-1.0.gir
-%{_datadir}/gtk-doc
-
-
-%if %{with libnma_gtk4}
-%files -n libnma-gtk4
-%{_libdir}/libnma-gtk4.so.*
-%{_libdir}/girepository-1.0/NMA4-1.0.typelib
-
-
-%files -n libnma-gtk4-devel
-%{_includedir}/libnma
-%{_libdir}/pkgconfig/libnma-gtk4.pc
-%{_libdir}/libnma-gtk4.so
-%{_datadir}/gir-1.0/NMA4-1.0.gir
-%endif
-
-
 %changelog
+* Sat Mar  7 2020 Thomas Haller <thaller@redhat.com> - 1.16.0-1
+- Update to 1.16.0 release
+- Move libnma to separate, independent project
+- move org.gnome.nm-applet.gschema.xml to libnma
+
 * Wed Jan 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.8.24-1.1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
