@@ -33,7 +33,7 @@ Requires: nm-connection-editor%{?_isa} = %{version}-%{release}
 Requires: libnma%{?_isa} >= %{libnma_version}
 
 BuildRequires: NetworkManager-libnm-devel >= %{nm_version}
-BuildRequires: libnma >= %{libnma_version}
+BuildRequires: libnma-devel >= %{libnma_version}
 BuildRequires: ModemManager-glib-devel >= 1.0
 BuildRequires: glib2-devel >= 2.32
 BuildRequires: gtk3-devel >= 3.10
